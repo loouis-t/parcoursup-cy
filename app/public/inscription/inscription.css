@@ -1,0 +1,81 @@
+:root {
+    --color: black;
+    --background: white;
+    --box-shadow: 0 0 .5em 0 rgba(0, 0, 0, .25);
+}
+
+html, body {
+    width: 100vw; min-height: 100vh;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--color);
+    text-decoration: none;
+}
+
+article {
+    padding: 2em 3em;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em 0;
+
+    box-shadow: var(--box-shadow);
+    border-radius: 1em;
+}
+
+article h2 {
+    margin: 0;
+}
+
+article form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em 0;
+
+    padding: .25em;
+}
+
+article form .button {
+    width: min-content; height: min-content;
+    padding: .25em 1em;
+
+    background-color: var(--background);
+    border: none;
+    border-radius: .5em;
+    box-shadow: var(--box-shadow) ;
+
+    transition: .1s box-shadow ease-out;
+    cursor: pointer;
+}
+
+article form .button:hover {
+    box-shadow: 0 0 .25em 0 rgba(0, 0, 0, .25);
+}
+
+article p {
+    margin: 0;
+    font-size: .75em;
+}
+
+article p a {
+    text-decoration: underline;
+}
+
+
+.error {
+    color: red;
+}
