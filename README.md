@@ -14,6 +14,8 @@ racine/
             |_ db/      --> tous les csv
         |_ public/
             |_ connexion/
+            |_ inscription/
+            |_ accueil/
             |_ index.php, main.css, main.js
             |_ assets   --> images/logos/...
 ```
