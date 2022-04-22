@@ -18,4 +18,5 @@ racine/
             |_ accueil/
             |_ index.php, main.css, main.js
             |_ assets   --> images/logos/...
+    |_ README.md        --> tah la documentation
 ```
