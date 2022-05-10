@@ -15,18 +15,18 @@
 
 
         // Vérifier si le boug est déja dans le csv
-        $already_in_database = false;
         if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 for ($i=0; $i<count($data); $i++) {
                     if (
-                        str_replace(' ', '', $_POST['prenom'])
-                        && str_replace(' ', '', $_POST['nom'])
-                        && str_replace(' ', '', $_POST['mail'])
-                        && $data[3] ==  hash('sha256', $_POST['pw'])
+                        str_replace(' ', '', $_POST['prenom']) == $data[0]
+                        && str_replace(' ', '', $_POST['nom']) == $data[1]
+                        && str_replace(' ', '', $_POST['mail']) == $data[2]
+                        && hash('sha256', $_POST['pw']) == $data[3]
                     ) {
-                        $already_in_database = true;
-                        break;
+                        fclose($handle);
+                        header('Location: /inscription/inscription.php?err=true');
+                        exit();
                     }
                 }
             }
@@ -34,7 +34,7 @@
         }
 
         // si il n'y est pas => on le rajoute
-        if(!$already_in_database) {
+        if($_GET['err'] != "true") {
             $fp = fopen("../../backend/db/identifiants.csv", "a+");
             fputcsv($fp, $current_eleve);
 
@@ -44,6 +44,7 @@
 
             fclose($fp);                                    // Fermeture du fichier
             header('Location: /accueil/accueil.php');       // redirection
+            exit();
         }
     }
 
@@ -54,6 +55,7 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="inscription.css">
+        <script src="./inscription.js" charset="utf-8" defer></script>
         <title>inscription</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->

@@ -1,7 +1,7 @@
 # Parcoursup-EISTI
 
 *(si vous avez des meilleures idées pour le nom...)*
-  
+
 Répartition des options suivant choix ING2
 
 ## Structure
@@ -10,7 +10,7 @@ Répartition des options suivant choix ING2
 racine/
     |_ app/
         |_ backend/
-            |_ api/     --> tous les .php pour tout le AJAX 
+            |_ api/     --> tous les .php pour tout le AJAX
             |_ db/      --> tous les csv
         |_ public/
             |_ connexion/
@@ -20,3 +20,30 @@ racine/
             |_ assets   --> images/logos/...
     |_ README.md        --> tah la documentation
 ```
+
+## Démarrer un serveur
+
+```
+./start.sh      (si bash par defaut)
+bash start.sh   (sinon)
+```
+
+Le serveur est lancé à l'adresse [localhost:8080]('http://localhost:8080')
+
+
+## CHACUN SA BRANCHE !
+
+```
+git clone git@gitlab.etude.eisti.fr:loouis-t/parcoursup-eisti.git   (pour récup le dossier)
+git checkout <nom de ta branche>                                    (pour aller sur ta branche)
+```
+
+Pour publier :
+
+```
+git add .
+git commit -m "<commentaire>"
+git push origin <nom de ta branche>
+```
+
+**On s'occupe de tout fusionner avec @Baptiste**
