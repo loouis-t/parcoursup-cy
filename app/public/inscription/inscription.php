@@ -1,6 +1,6 @@
 <?php
     if (
-        isset($_POST['prenom']) 
+        isset($_POST['prenom'])
         && isset($_POST['nom'])
         && isset($_POST['mail'])
         && isset($_POST['pw'])
@@ -37,11 +37,11 @@
         if(!$already_in_database) {
             $fp = fopen("../../backend/db/identifiants.csv", "a+");
             fputcsv($fp, $current_eleve);
-    
+
             session_start();
             $_SESSION['mail'] = $_POST['mail'];
             $_SESSION['droits'] = $_POST['eleve'];
-    
+
             fclose($fp);                                    // Fermeture du fichier
             header('Location: /accueil/accueil.php');       // redirection
         }
@@ -59,7 +59,7 @@
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
         <article>
@@ -71,15 +71,11 @@
                 <input type="mail" name="mail" placeholder="e-mail" required>
                 <input type="password" name="pw" placeholder="Mot de passe" required>
 
-                <?php
-                    if($already_in_database) {
-                        echo '<p class="error">Cet utilisateur existe déjà!</p>';
-                    }
-                ?>
+                <p class="error" style="display:none;">Cet utilisateur existe déjà!</p>
                 <input class="button" type="submit" value="S'inscrire">
             </form>
 
-            <p>Vous avez déjà un compte? <a href="../inscription/inscription.php">Connectez vous</a>!</p>
+            <p>Vous avez déjà un compte? <a href="../connexion/connexion.php">Connectez vous</a>!</p>
         </article>
     </body>
 </html>
