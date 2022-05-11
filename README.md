@@ -28,17 +28,20 @@ racine/
 bash start.sh   (sinon)
 ```
 
-Le serveur est lancé à l'adresse [localhost:8080]('http://localhost:8080')
+Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
 
 
 ## CHACUN SA BRANCHE !
 
 ```
 git clone git@gitlab.etude.eisti.fr:loouis-t/parcoursup-eisti.git   (pour récup le dossier)
-git checkout <nom de ta branche>                                    (pour aller sur ta branche)
+git checkout -b <nom de ta branche>                                 (pour créer ta branche en local)
+git pull origin <nom de ta branche distante>                        (pour récup ta branche distante sur ta branche locale)
 ```
-
-Pour publier :
+  
+**RQ :** ```start.sh``` fait le ```checkout``` et le ```pull``` sus-précisés pour vous.
+  
+**Pour publier :**
 
 ```
 git add .

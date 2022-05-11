@@ -5,6 +5,47 @@ function start_php_server() {
     php -S localhost:8080 -t app/public/
 }
 
+
+function switch_branch() {
+    echo ""
+    echo "T'es qui toi? (c pour un pote)"
+    echo ""
+    echo "  1. Louis      (louis)"
+    echo "  2. Baptiste   (LaBrancheDuBG)"
+    echo "  3. Yan        (Yan)"
+    echo "  4. Ugo        (Ugo)"
+    echo "  5. Edouard    (EDOUDOU)"
+    echo ""
+    printf "Numéro : "
+    read BRANCH_NO
+    echo ""
+
+    case $BRANCH_NO in
+        "1")
+            BRANCH="louis";;
+        "2")
+            BRANCH="LaBrancheDuBG";;
+        "3")
+            BRANCH="Yan";;
+        "4")
+            BRANCH="Ugo";;
+        "3")
+            BRANCH="EDOUDOU";;
+        *)
+            echo "Branche inconnue"
+            exit 0;;
+    esac
+
+    git checkout -b $BRANCH
+
+    printf "Voulez-vous récupérer les modifications de votre branche ($BRANCH)? (y/n) : "
+    read RECUPERER_BRANCH
+    if [[ "$RECUPERER_BRANCH" == "y" ]]; then
+        git pull origin $BRANCH
+    fi
+}
+
+switch_branch
 {
     start_php_server
 } || {
