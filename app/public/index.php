@@ -26,6 +26,8 @@
             </div>
             
             <img src="./assets/cy-tech.png" alt="">
+
+            <div class="wave"></div>
         </article>
     </body>
 </html>
