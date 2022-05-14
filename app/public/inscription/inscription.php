@@ -1,4 +1,10 @@
 <?php
+    session_start();                    // démarrer session
+    if (isset($_SESSION['prenom'])) {
+        header('Location: /accueil/accueil.php');
+        exit();
+    }
+
     if (
         isset($_POST['prenom'])
         && isset($_POST['nom'])
@@ -38,7 +44,8 @@
             $fp = fopen("../../backend/db/identifiants.csv", "a+");
             fputcsv($fp, $current_eleve);
 
-            session_start();
+            $_SESSION['prenom'] = $current_eleve[0];
+            $_SESSION['nom'] = $current_eleve[1];
             $_SESSION['mail'] = $_POST['mail'];
             $_SESSION['droits'] = $_POST['eleve'];
 
@@ -54,6 +61,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="../root.css">
         <link rel="stylesheet" href="inscription.css">
         <script src="./inscription.js" charset="utf-8" defer></script>
         <title>inscription</title>

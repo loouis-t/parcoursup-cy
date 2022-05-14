@@ -1,4 +1,10 @@
 <?php
+    session_start();                    // démarrer session
+    if (isset($_SESSION['prenom'])) {
+        header('Location: /accueil/accueil.php');
+        exit();
+    }
+
     if (
         isset($_POST['mail'])
         && isset($_POST['pw'])
@@ -7,18 +13,22 @@
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 for ($i=0; $i<count($data); $i++) {
                     if (
-                        $data[2] == $_POST['mail'] 
-                        && $data[3] ==  hash('sha256', $_POST['pw'])
+                        str_replace(' ', '', $_POST['mail']) == $data[2]
+                        && hash('sha256', $_POST['pw']) == $data[3]
                     ) {
-                        session_start();                    // démarrer session
+                        $_SESSION['prenom'] = $data[0];     // stocker prenom dans session
+                        $_SESSION['nom'] = $data[1];        // stocker nom dans session
                         $_SESSION['mail'] = $_POST['mail']; // cookie mail
                         $_SESSION['droits'] = $data[4];     // cookie droits (eleve/prof/admin)
                         fclose($handle);                    // libérer csv
                         header('Location: /accueil/accueil.php');
+                        exit();
                     }
                 }
             }
             fclose($handle);
+            header('Location: /connexion/connexion.php?err=true');
+            exit();
         }
     }
 ?>
@@ -28,6 +38,7 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="connexion.css">
+        <link rel="stylesheet" href="../root.css">
         <title>Connexion</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->
@@ -43,6 +54,11 @@
                 <input type="mail" name="mail" placeholder="e-mail" required>
                 <input type="password" name="pw" placeholder="Mot de passe" required>
 
+                <?php
+                    if(isset($_GET['err']) && $_GET['err'] == "true") {
+                        echo '<p class="error" style="color: red">Identifiant ou mot de passe incorrect</p>';
+                    }
+                ?>
                 <input class="button" type="submit" value="Se connecter">
             </form>
 

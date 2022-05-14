@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="root.css">
         <link rel="stylesheet" href="main.css">
         <title>Parcoursup EISTI</title>
 
