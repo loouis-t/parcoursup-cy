@@ -5,6 +5,8 @@
         header('Location: /');
         exit();
     }
+
+    $_SERVER['DOCUMENT_ROOT'] = '/parcoursup-eisti/app/backend/assets';
 ?>
 
 <!DOCTYPE html>

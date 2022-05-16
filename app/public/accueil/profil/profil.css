@@ -12,8 +12,8 @@
     width: 30vh; min-height: 30vh;
     border-radius: 50%;
 
-    background: url(../../assets/pdp.jpeg);
-    background-size: cover;
+    object-fit: cover;
+
     box-shadow: var(--box-shadow);
 }
 

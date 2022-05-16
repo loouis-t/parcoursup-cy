@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +12,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
     </head>
     <body>
-        <h2>ECTS de <?php echo $_SESSION['prenom']; ?></h2>
+        <h2>ECTS de <i><?php echo $_SESSION['prenom']; ?></i></h2>
     </body>
 </html>

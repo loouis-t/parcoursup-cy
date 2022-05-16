@@ -1,6 +1,34 @@
 <?php
-    session_start();
+    // si l'utilisateur a cliqué sur enregistrer
+    if (isset($_POST['mail']) && isset($_POST['adresse'])) {
+        if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
+            $fp = fopen("../../backend/db/identifiants_temp.csv", "w");
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($data[2] !== $_SESSION['mail']) {
+                    fputcsv($fp, $data);    // ecrit les données dans le fichier temporaire
+                } else {
+                    $data[2] = strtolower($_POST['mail']);           // change le mail de l'élève
+                    if (isset($_POST['adresse']) && $_POST['adresse'] != 'inconnue') {
+                        if (isset($data[5])) {
+                            $data[5] = $_POST['adresse'];
+                        } else {
+                            array_push($data, $_POST['adresse']); // ajoute l'adresse de l'eleve
+                        }
+                    }
+                    fputcsv($fp, $data);   // rajouter la ligne modifiée
+                }
+            }
+            fclose($fp);
+            fclose($handle);
+            
+            rename("../../backend/db/identifiants_temp.csv", "../../backend/db/identifiants.csv");
+    
+            $_SESSION['mail'] = strtolower($_POST['mail']);
+            $_SESSION['adresse'] = $_POST['adresse'];
+        }
+    }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -17,14 +45,14 @@
     </head>
     <body>
         <div class="profil">
-            <div class="profil__pdp"></div>
+            <img class="profil__pdp" src="<?php echo '../../assets/pdps/pdp__'.$_SESSION['mail'].'.jpg'; ?>" alt="pdp__currentUser">
             <div class="profil__intro">
                 <h2>Bienvenue <i><?php echo $_SESSION['prenom']; ?></i></h2>
                 <p><?php echo $_SESSION['droits']; ?></p>
             </div>
 
             <h3>Mes infos :</h3>
-            <form action="accueil/profil/profil.php" method="post">
+            <form action="/accueil/accueil.php" method="post">
                 <p>
                     Adresse mail : <input type="email" name="mail" value="<?php echo $_SESSION['mail'];?>">
                 </p>
