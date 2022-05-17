@@ -1,6 +1,20 @@
 <?php
     // si l'utilisateur a cliqué sur enregistrer
-    if (isset($_POST['mail']) && isset($_POST['adresse'])) {
+    if (
+        isset($_POST['mail'])
+        && isset($_POST['adresse'])
+        && $_POST['mail'] !== $_SESSION['mail']
+    ) {
+        if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($data[2] === $_POST['mail']) {
+                    fclose($handle);
+                    header('Location: /accueil/accueil.php?err=true&type=mail');
+                    exit();
+                }
+            }
+        }
+
         if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
             $fp = fopen("../../backend/db/identifiants_temp.csv", "w");
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -27,6 +41,43 @@
             $_SESSION['adresse'] = $_POST['adresse'];
         }
     }
+
+    // changer pdp
+    if (isset($_FILES['pdp']) && $_FILES['pdp']['name'] !== "") {
+        if ($_FILES['pdp']['error'] == 0) {
+            $allowed = array(
+                "jpg" => "image/jpg", 
+                "jpeg" => "image/jpeg",
+                "png" => "image/png"
+            );
+
+            $filename = $_SESSION['mail'].".jpg";
+            if (isset($_FILES['pdp']['size'])) {
+                $filesize = $_FILES['pdp']['size'];
+            } else {
+                $filesize = 0;
+            }
+
+            // vérifier si extension  valide + taille du fichier
+            $ext = pathinfo(strtolower($_FILES['pdp']['name']), PATHINFO_EXTENSION);
+            $maxsize = 5 * 1024 * 1024;
+            if(!array_key_exists($ext, $allowed) || $filesize > $maxsize) { 
+                header('Location: /accueil/accueil.php?err=true&type=pdp_size');
+                exit();
+            }
+
+            // Vérifie si le fichier existe avant de le télécharger.
+            if(file_exists("../assets/pdps/".$filename)){
+                move_uploaded_file($_FILES["pdp"]["tmp_name"], "../assets/pdps/".$filename.".tmp");
+                rename("../assets/pdps/".$filename.".tmp", "../assets/pdps/".$filename);
+            } else{
+                move_uploaded_file($_FILES["pdp"]["tmp_name"], "../assets/pdps/".$filename);
+            }
+        } else {
+            header('Location: /accueil/accueil.php?err=true&type=pdp');
+            exit();
+        }
+    }
 ?>
 
 
@@ -45,31 +96,51 @@
     </head>
     <body>
         <div class="profil">
-            <img class="profil__pdp" src="<?php echo '../../assets/pdps/pdp__'.$_SESSION['mail'].'.jpg'; ?>" alt="pdp__currentUser">
+            <img class="profil__pdp" src=
+            "
+            <?php
+                echo "../../assets/pdps/".$_SESSION['mail'].".jpg";
+            ?>
+            " alt="pdp__currentUser" onerror="this.src='../../assets/pdps/pdp__inconnue.jpg'">
             <div class="profil__intro">
                 <h2>Bienvenue <i><?php echo $_SESSION['prenom']; ?></i></h2>
                 <p><?php echo $_SESSION['droits']; ?></p>
             </div>
 
             <h3>Mes infos :</h3>
-            <form action="/accueil/accueil.php" method="post">
-                <p>
+            <form action="/accueil/accueil.php" method="post" enctype="multipart/form-data">
+                <label>
                     Adresse mail : <input type="email" name="mail" value="<?php echo $_SESSION['mail'];?>">
-                </p>
-                <p>
-                    Photo de profil : <input type="file">
-                </p>
-                <p>
+                </label>
+                <label>
+                    Photo de profil : <u>changer</u>
+                    <input class="pdp-uploader" name="pdp" type="file" accept="image/jpg, image/png, image/jpeg">
+                </label>
+                <label>
                     Adresse postale : <input type="text" name="adresse" value="<?php
-                        if(isset($_SESSION['adresse'])) {
-                            echo $_SESSION['adresse'];
-                        } else {
-                            echo "inconnue";
-                        }
+                        echo isset($_SESSION['adresse']) ? $_SESSION['adresse'] : "inconnue";
                     ?>">
-                </p>
+                </label>
 
-                <input type="submit" value="Enregistrer">
+                <?php
+                    if (isset($_GET['err']) && isset($_GET['type'])) {
+                        switch ($_GET['type']) {
+                            case "mail":
+                                echo '<p class="error">Cette adresse mail n\'est pas disponible.</p>';
+                                break;
+                                case "pdp":
+                                    echo '<p class="error">Impossible d\'uploader cette photo.</p>';
+                                    break;
+                                case "pdp_size":
+                                    echo '<p class="error">Veuillez importer une image inférieure à 5mo.</p>';
+                                    break;
+                            default:
+                                break;
+                        }
+                    }
+                ?>
+
+                <input class="button" type="submit" value="Enregistrer">
             </form>
         </div>
     </body>

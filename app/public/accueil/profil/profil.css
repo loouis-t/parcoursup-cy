@@ -9,7 +9,7 @@
     align-self: center;
     margin-bottom: 1rem;
 
-    width: 30vh; min-height: 30vh;
+    width: 30vh; height: 30vh;
     border-radius: 50%;
 
     object-fit: cover;
@@ -36,8 +36,23 @@
     flex-direction: column;
     align-items: flex-start;
     row-gap: 0;
+
+    overflow: visible;
 }
 
-.profil form p {
+.profil form label {
     margin: .25rem 0;
+}
+
+.profil form label u {
+    cursor: pointer;
+}
+
+.profil form .pdp-uploader {
+    display: none;
+}
+
+.profil form .button {
+    margin-top: .75rem;
+    padding: .5em 1em;
 }

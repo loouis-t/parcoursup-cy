@@ -30,19 +30,9 @@ header div a {
 
     width: min-content; height: min-content;
     padding: 1em 2em;
-    
-    border-radius: .75em;
-    box-shadow: var(--box-shadow);
-
-    transition: .1s box-shadow ease-out;
-}
-
-header div a:hover {
-    box-shadow: 0 0 .25em 0 rgba(0, 0, 0, .25);
 }
 
 /* CONTENU PAGE */
-
 article {
     position: relative;
     width: 100%; height: calc(100vh - 6rem);

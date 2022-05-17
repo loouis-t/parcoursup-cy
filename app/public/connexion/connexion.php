@@ -57,7 +57,7 @@
 
                 <?php
                     if(isset($_GET['err']) && $_GET['err'] == "true") {
-                        echo '<p class="error" style="color: red">Identifiant ou mot de passe incorrect</p>';
+                        echo '<p class="error">Identifiant ou mot de passe incorrect</p>';
                     }
                 ?>
                 <input class="button" type="submit" value="Se connecter">

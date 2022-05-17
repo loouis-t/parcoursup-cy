@@ -32,18 +32,6 @@ article form {
 article form .button {
     width: min-content; height: min-content;
     padding: .25em 1em;
-
-    background-color: var(--background);
-    border: none;
-    border-radius: .5em;
-    box-shadow: var(--box-shadow) ;
-
-    transition: .1s box-shadow ease-out;
-    cursor: pointer;
-}
-
-article form .button:hover {
-    box-shadow: 0 0 .25em 0 rgba(0, 0, 0, .25);
 }
 
 article p {
