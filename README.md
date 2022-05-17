@@ -35,9 +35,10 @@ Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
 
 ```
 git clone git@gitlab.etude.eisti.fr:loouis-t/parcoursup-eisti.git   (pour récup le dossier)
+cd parcoursup-eisti
 ```
 
-**RQ :**```start.sh``` fait le ```checkout``` et le ```pull``` ci-dessous pour vous.
+**RQ :**```./start.sh``` fait le ```checkout``` et le ```pull``` ci-dessous pour vous.
 
 ```
 git checkout -b <nom de ta branche>                                 (pour créer ta branche en local)
@@ -45,7 +46,7 @@ git pull origin <nom de ta branche distante>                        (pour récup
 ```
 
 **Voir le site :** ```ctrl + clic``` sur ```localhost:8080``` dans le terminal (ou [ici](http://localhost:8080)).
-  
+
 **Pour publier :**
 
 ```
