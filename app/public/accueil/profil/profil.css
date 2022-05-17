@@ -23,7 +23,8 @@
 
 .profil__intro p {
     margin: 0;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--color);
+    opacity: .25;
 }
 
 .profil h3 {

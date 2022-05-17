@@ -64,6 +64,7 @@
         <link rel="stylesheet" href="../root.css">
         <link rel="stylesheet" href="inscription.css">
         <script src="./inscription.js" charset="utf-8" defer></script>
+        <script type="text/javascript" src="../index.js" defer></script>
         <title>inscription</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->
