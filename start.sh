@@ -51,7 +51,11 @@ function switch_branch() {
     printf "Voulez-vous récupérer les modifications de votre branche ($BRANCH)? (y/n) : "
     read RECUPERER_BRANCH
     if [[ "$RECUPERER_BRANCH" == "y" ]]; then
-        git pull origin $BRANCH
+        {
+            git pull origin $BRANCH
+        } || {
+            echo "Pas de branche distante : ($BRANCH)."
+        }
     fi
 
     # l'utilisateur veut peut etre se synchroniser avec la branche principale? 
