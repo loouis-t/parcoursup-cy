@@ -7,6 +7,9 @@ function start_php_server() {
 
 
 function switch_branch() {
+    git checkout main
+    git pull origin main
+
     echo ""
     echo "T'es qui toi? (c pour un pote)"
     echo ""
@@ -36,7 +39,12 @@ function switch_branch() {
             exit 0;;
     esac
 
-    git checkout -b $BRANCH
+    {
+        git checkout -b $BRANCH
+    } || {
+        git branch -d $BRANCH
+        git checkout $BRANCH
+    }
 
     printf "Voulez-vous récupérer les modifications de votre branche ($BRANCH)? (y/n) : "
     read RECUPERER_BRANCH
