@@ -40,14 +40,14 @@
         }
 
         // si il n'y est pas => on le rajoute
-        if($_GET['err'] != "true") {
+        if($_GET['err'] !== "true") {
             $fp = fopen("../../backend/db/identifiants.csv", "a+");
             fputcsv($fp, $current_eleve);
 
             $_SESSION['prenom'] = $current_eleve[0];
             $_SESSION['nom'] = $current_eleve[1];
             $_SESSION['mail'] = $_POST['mail'];
-            $_SESSION['droits'] = $_POST['eleve'];
+            $_SESSION['droits'] = 'eleve';
 
             fclose($fp);                                    // Fermeture du fichier
             header('Location: /accueil/accueil.php');       // redirection
@@ -82,7 +82,11 @@
                 <input type="mail" name="mail" placeholder="e-mail" required>
                 <input type="password" name="pw" placeholder="Mot de passe" required>
 
-                <p class="error" style="display:none;">Cet utilisateur existe déjà!</p>
+                <?php
+                    if (isset($_GET['err']) && $_GET['err'] == "true") {
+                        echo '<p class="error" style="display:none;">Cet utilisateur existe déjà!</p>';
+                    }
+                ?>
                 <input class="button" type="submit" value="S'inscrire">
             </form>
 

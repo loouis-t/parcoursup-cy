@@ -40,9 +40,7 @@
                     case "prof":
                         break;
                     case "eleve":
-                        echo '<a class="button" href="/accueil/accueil.php?page=moyenne">Ma moyenne</a>
-                        <a class="button" href="/accueil/accueil.php?page=ects">Mes ECTS</a>
-                        <a class="button" href="/accueil/accueil.php?page=choix">Mes choix</a>';
+                        echo '<a class="button" href="/accueil/accueil.php?page=moyenne">Ma scolarité</a>';
                         break;
                 }
                 ?>
