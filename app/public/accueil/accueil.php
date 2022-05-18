@@ -33,6 +33,7 @@
         <article>
             <nav>
                 <a class="button" href="/accueil/accueil.php?page=profil">Mon profil</a>
+                
                 <?php
                 switch ($_SESSION['droits']) {
                     case "admin":
