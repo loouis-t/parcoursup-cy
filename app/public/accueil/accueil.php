@@ -1,4 +1,5 @@
 <?php
+    date_default_timezone_set('Europe/Paris');
     session_start();
     if (!isset($_SESSION['prenom']) || isset($_GET['deco'])) {
         session_destroy();
@@ -37,6 +38,8 @@
                 <?php
                 switch ($_SESSION['droits']) {
                     case "admin":
+                        echo '<a class="button" href="/accueil/accueil.php?page=inscriptions">Inscrire élèves</a>';
+                        echo '<a class="button" href="/accueil/accueil.php?page=logs">Logs</a>';
                         break;
                     case "prof":
                         break;
@@ -51,16 +54,26 @@
                 <?php
                     if (isset($_GET['page'])) {
                         $page = $_GET['page'];
-                        if ($page == 'profil') {
-                            include 'profil/profil.php';
-                        } else if ($page == 'moyenne') {
-                            include 'moyenne/moyenne.php';
-                        } else if ($page == 'ects') {
-                            include 'ects/ects.php';
-                        } else if ($page == 'choix') {
-                            include 'choix/choix.php';
-                        } else {
-                            include 'profil/profil.php';
+
+                        switch ($page) {
+                            case "profil":
+                                include 'profil/profil.php';
+                                break;
+                            case "moyenne":
+                                include 'moyenne/moyenne.php';
+                                break;
+                            case "logs":
+                                include 'logs/logs.php';
+                                break;
+                            case "choix":
+                                include 'choix/choix.php';
+                                break;
+                            case "inscriptions":
+                                include 'inscriptions/inscriptions.php';
+                                break;
+                            default:
+                                include 'profil/profil.php';
+                                break;
                         }
                     } else {
                         include 'profil/profil.php';

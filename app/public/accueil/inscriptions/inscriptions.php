@@ -12,8 +12,6 @@
             }
 
             if(($handle = fopen($filename, "r")) !== FALSE) {
-                $fp = fopen("../../backend/db/identifiants.csv", "a+");
-
                 // set separator to comma or semicolon
                 if (($data = fgetcsv($handle, 1000, ",")) !== FALSE && isset($data[1])) {
                     $sep = ",";
@@ -21,30 +19,48 @@
                     $sep = ";";
                 }
                 // create students
+                $counter = 0;
                 while (($data = fgetcsv($handle, 1000, $sep)) !== FALSE) {
+                    $mail_already_exists = false;
 
                     // check if student already exists
-                    while (($existing_mail = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                        if ($existing_mail[2] === $data[2]) {
-                            $mail_already_exists = true;
-                            break;
+                    if(($handle_ids = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
+                        while (($existing_mail = fgetcsv($handle_ids, 1000, ',')) !== FALSE) {
+                            if ($existing_mail[2] === $data[2]) {
+                                $mail_already_exists = true;
+                                break;
+                            }
                         }
+                        fclose($handle_ids);
                     }
+
+                    $fp = fopen("../../backend/db/identifiants.csv", "a+");
                     if (!$mail_already_exists) {
-                        fputcsv($fp, [
-                            $data[0],
-                            $data[1],
-                            $data[2],
-                            hash('sha256', 'admin'),
-                            'eleve'
-                        ]);
+                        // add student
+                        fputcsv($fp, [ $data[0], $data[1], $data[2], hash('sha256', 'admin'), 'eleve' ]);
+                        $counter++;
                     }
+                    fclose($fp);    // close file
                 }
-                fclose($fp);
-                fclose($handle);
+                fclose($handle);    // close csv file
+                unlink($filename);  // supprime le fichier temporaire
+
+                // log : inscription en masse
+                if ($counter > 0) {
+                    $logs = fopen("../../backend/db/logs.csv", "a+");
+                    fputcsv($logs, [ date('Y-m-d'), date('H:i:s'), "Inscription en masse de " . $counter . " élèves" ]);
+                    fclose($logs);
+
+                    header('Location: /accueil/accueil.php?page=inscriptions&err=false');
+                    exit();
+                } else {
+                    header('Location: /accueil/accueil.php?page=inscriptions&err=true&err_msg=0');
+                    exit();
+                }
+
             }
         } else {
-            header('Location: /accueil/accueil.php?err=true&type=file');
+            header('Location: /accueil/accueil.php?page=inscriptions&err=true');
             exit();
         }
     }
@@ -66,12 +82,32 @@
     </head>
     <body>
         <h2>Inscrire des élèves en masse</h2>
-        <p>Cette page vous permet d'inscrire des listes d'éleves depuis un fichier csv.</p>
+        <p>
+            Cette page vous permet d'inscrire des listes d'éleves depuis un fichier csv. <br>
+            Le fichier doit être séparé par "," ou ";" et doit contenir les colonnes suivantes : <i>prénom</i>, <i>nom</i>, <i>mail</i>.
+        </p>
 
         <form action="/accueil/accueil.php?page=inscriptions" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" accept=".csv">
+            <label for="file">
+                Importer un fichier csv :
+                <input type="file" name="file" id="file" accept=".csv">
+            </label>
 
-            <input type="submit" value="Envoyer">
+            <?php
+                if (isset($_GET['err'])) {
+                    if ($_GET['err'] == "true") {
+                        if(isset($_GET['err_msg']) && $_GET['err_msg'] == "0") {
+                            echo '<p class="success">Aucun nouvel élève à ajouter.</p>';
+                        } else {
+                            echo '<p class="error">Erreur lors du téléchargement du fichier.</p>';
+                        }
+                    } else {
+                        echo '<p class="success">Ajout effectué avec succès.</p>';
+                    }
+                }
+            ?>
+
+            <input class="button" type="submit" value="Envoyer">
         </form>
     </body>
 </html>

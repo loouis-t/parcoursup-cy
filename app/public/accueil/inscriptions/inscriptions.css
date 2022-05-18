@@ -1,5 +1,13 @@
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    margin-top: 2rem;
+}
+
+form #file {
+    border: none;
+    border-bottom: 1px solid var(--color);
+    border-radius: 0;
+}
+
+form input[type="submit"] {
+    margin-top: 1rem;
 }

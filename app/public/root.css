@@ -22,6 +22,14 @@ a {
     text-decoration: none;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    overflow: visible;
+}
+
 .button {
     background-color: transparent;
     box-shadow: var(--box-shadow);
@@ -38,6 +46,11 @@ a {
 
 .error {
     color: red;
+    font-size: .75rem;
+}
+
+.success {
+    color: green;
     font-size: .75rem;
 }
 
