@@ -40,17 +40,34 @@ function switch_branch() {
     esac
 
     {
+        # créer nouvelle branche a partir de la branche principale
         git checkout -b $BRANCH
     } || {
-        git branch -d $BRANCH
+        # si la branche existe déjà, on switch sur celle-ci
         git checkout $BRANCH
     }
 
+    # l'utilisateur veut peut etre récup ses modifs distantes? 
     printf "Voulez-vous récupérer les modifications de votre branche ($BRANCH)? (y/n) : "
     read RECUPERER_BRANCH
     if [[ "$RECUPERER_BRANCH" == "y" ]]; then
         git pull origin $BRANCH
     fi
+
+    # l'utilisateur veut peut etre se synchroniser avec la branche principale? 
+    printf "Voulez-vous suivre la branche 'main' (dans '$BRANCH')? (y/n) : "
+    read SUIVRE_MAIN
+    if [[ "$SUIVRE_MAIN" == "y" ]]; then
+        git checkout main
+        git branch -D $BRANCH
+        {
+            git push origin --delete $BRANCH
+        } || {
+            echo "Pad de branche '$BRANCH' sur gitlab."
+        }
+        git checkout -b $BRANCH
+    fi
+
 }
 
 switch_branch
