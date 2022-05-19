@@ -1,6 +1,6 @@
 <?php
     date_default_timezone_set('Europe/Paris');
-    
+
     session_start();
     if (!isset($_SESSION['prenom']) || isset($_GET['deco'])) {
         session_destroy();
@@ -30,12 +30,13 @@
             <a href="/"><h1>parcoursup-eisti</h1></a>
             <div>
                 <a class="button" href="/accueil/accueil.php?&deco=true">Déconnexion</a>
+                <label class="switch"><input class="checkbox" type="checkbox"><span class="slider round" onclick="dark()"></span></label>
             </div>
         </header>
         <article>
             <nav>
                 <a class="button" href="/accueil/accueil.php?page=profil">Mon profil</a>
-                
+
                 <?php
                 switch ($_SESSION['droits']) {
                     case "admin":

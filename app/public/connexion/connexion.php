@@ -48,22 +48,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
+      <header>
+          <a href="/"><h1>parcoursup-eisti</h1></a>
+          <div>
+             <label class="switch"><input class="checkbox" type="checkbox"><span class="slider round" onclick="dark()"></span></label>
+          </div>
+      </header>
         <article>
-            <h2>Connexion</h2>
+           <div class="box">
+             <h2>Connexion</h2>
 
-            <form action="connexion.php" method="post">
+             <form action="connexion.php" method="post">
                 <input type="mail" name="mail" placeholder="e-mail" required>
                 <input type="password" name="pw" placeholder="Mot de passe" required>
 
                 <?php
-                    if(isset($_GET['err']) && $_GET['err'] == "true") {
-                        echo '<p class="error">Identifiant ou mot de passe incorrect</p>';
-                    }
+                if(isset($_GET['err']) && $_GET['err'] == "true") {
+                   echo '<p class="error">Identifiant ou mot de passe incorrect</p>';
+                }
                 ?>
                 <input class="button" type="submit" value="Se connecter">
-            </form>
+             </form>
 
-            <p>Pas encore de compte? <a href="../inscription/inscription.php">Inscrivez vous</a>!</p>
+             <p>Pas encore de compte? <a href="../inscription/inscription.php">Inscrivez vous</a>!</p>
+           </div>
         </article>
     </body>
 </html>

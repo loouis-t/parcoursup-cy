@@ -16,9 +16,9 @@
         <header>
             <a href="/"><h1>parcoursup-eisti</h1></a>
             <div>
-                <a href="connexion/connexion.php">Connexion</a>
-                <a href="inscription/inscription.php">Inscription</a>
-                <a onclick="dark()">Dark-mode</a>
+                <a href="connexion/connexion.php" class="button">Connexion</a>
+                <a href="inscription/inscription.php" class="button">Inscription</a>
+                <label class="switch"><input class="checkbox" type="checkbox"><span class="slider round" onclick="dark()"></span></label>
             </div>
         </header>
 

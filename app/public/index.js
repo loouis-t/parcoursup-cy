@@ -10,4 +10,5 @@ function dark(){
 
 if (localStorage.getItem('theme') === 'dark') {
    document.body.classList.add('dark');
+   document.querySelector('.checkbox').checked = 'true';
 }
