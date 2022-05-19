@@ -1,5 +1,6 @@
 <?php
     date_default_timezone_set('Europe/Paris');
+    
     session_start();
     if (!isset($_SESSION['prenom']) || isset($_GET['deco'])) {
         session_destroy();
@@ -44,10 +45,12 @@
                     case "prof":
                         break;
                     case "eleve":
-                        echo '<a class="button" href="/accueil/accueil.php?page=moyenne">Ma scolarité</a>';
+                        echo '<a class="button" href="/accueil/accueil.php?page=scolarite">Ma scolarité</a>';
                         break;
                 }
                 ?>
+
+                <a class="button" href="/accueil/accueil.php?page=messagerie">Messagerie</a>
             </nav>
 
             <section class="hero">
@@ -59,14 +62,14 @@
                             case "profil":
                                 include 'profil/profil.php';
                                 break;
-                            case "moyenne":
-                                include 'moyenne/moyenne.php';
+                            case "scolarite":
+                                include 'scolarite/scolarite.php';
                                 break;
                             case "logs":
                                 include 'logs/logs.php';
                                 break;
-                            case "choix":
-                                include 'choix/choix.php';
+                            case "messagerie":
+                                include 'messagerie/messagerie.php';
                                 break;
                             case "inscriptions":
                                 include 'inscriptions/inscriptions.php';

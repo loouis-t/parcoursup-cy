@@ -1,6 +1,8 @@
 <?php
+    date_default_timezone_set('Europe/Paris');
+    
     session_start();                    // démarrer session
-    if (isset($_SESSION['prenom'])) {
+    if (isset($_SESSION['mail'])) {
         header('Location: /accueil/accueil.php');
         exit();
     }
@@ -25,10 +27,7 @@
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 for ($i=0; $i<count($data); $i++) {
                     if (
-                        str_replace(' ', '', $_POST['prenom']) == $data[0]
-                        && str_replace(' ', '', $_POST['nom']) == $data[1]
-                        && str_replace(' ', '', $_POST['mail']) == $data[2]
-                        && hash('sha256', $_POST['pw']) == $data[3]
+                        strtolower(str_replace(' ', '', $_POST['mail'])) == strtolower($data[2])
                     ) {
                         fclose($handle);
                         header('Location: /inscription/inscription.php?err=true');
@@ -46,10 +45,16 @@
 
             $_SESSION['prenom'] = $current_eleve[0];
             $_SESSION['nom'] = $current_eleve[1];
-            $_SESSION['mail'] = $_POST['mail'];
+            $_SESSION['mail'] = strtolower($_POST['mail']);
             $_SESSION['droits'] = 'eleve';
 
-            fclose($fp);                                    // Fermeture du fichier
+            fclose($fp);                                    // Fermeture 'identifiants.csv'
+
+            // Log inscription
+            $logs = fopen("../../backend/db/logs.csv", "a+");
+            fputcsv($logs, [ date('Y-m-d'), date('H:i:s'), "Inscription : " . strtolower($_SESSION['mail']) ]);
+            fclose($logs);                                  // Fermeture 'logs.csv'
+
             header('Location: /accueil/accueil.php');       // redirection
             exit();
         }
@@ -63,7 +68,6 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="../root.css">
         <link rel="stylesheet" href="inscription.css">
-        <script src="./inscription.js" charset="utf-8" defer></script>
         <script type="text/javascript" src="../index.js" defer></script>
         <title>inscription</title>
 
@@ -83,10 +87,11 @@
                 <input type="password" name="pw" placeholder="Mot de passe" required>
 
                 <?php
-                    if (isset($_GET['err']) && $_GET['err'] == "true") {
-                        echo '<p class="error" style="display:none;">Cet utilisateur existe déjà!</p>';
+                    if (isset($_GET['err']) && $_GET['err'] === "true") {
+                        echo '<p class="error"">Cet utilisateur existe déjà!</p>';
                     }
                 ?>
+
                 <input class="button" type="submit" value="S'inscrire">
             </form>
 

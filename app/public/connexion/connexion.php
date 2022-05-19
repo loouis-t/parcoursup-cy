@@ -13,7 +13,7 @@
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 for ($i=0; $i<count($data); $i++) {
                     if (
-                        str_replace(' ', '', $_POST['mail']) == $data[2]
+                        strtolower(str_replace(' ', '', $_POST['mail'])) == strtolower($data[2])
                         && hash('sha256', $_POST['pw']) == $data[3]
                     ) {
                         $_SESSION['prenom'] = $data[0];     // stocker prenom dans session

@@ -47,7 +47,7 @@ article {
     width: 100vw; min-height: calc(100vh - 6rem);
     padding: 5vh 10vw;
 
-    background-color: rgba(0, 0, 0, .05); /* permet la wave */
+    background-color: var(--background-secondary);
 
     display: flex;
     align-items: center;

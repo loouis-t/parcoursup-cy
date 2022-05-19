@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="root.css">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="index.css">
         <title>Parcoursup EISTI</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->

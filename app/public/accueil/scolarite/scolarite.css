@@ -1,0 +1,11 @@
+table tr th {
+    width: 1000px;
+}
+
+table tr td:first-of-type {
+    font-weight: bold;
+}
+
+table tr td {
+    text-align: center;
+}

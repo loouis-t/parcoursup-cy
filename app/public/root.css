@@ -1,6 +1,7 @@
 :root {
     --color: black;
     --background: white;
+    --background-secondary: rgba(0, 0, 0, .05);
     --box-shadow: 0 0 .5em 0 rgba(0, 0, 0, .25);
     --box-shadow-hover : 0 0 .25em 0 rgba(0, 0, 0, .25);
 }
@@ -15,6 +16,8 @@ html, body {
 * {
     box-sizing: border-box;
     overflow-x: hidden;
+
+    outline: none;
 }
 
 a {
@@ -28,6 +31,15 @@ form {
     align-items: flex-start;
 
     overflow: visible;
+}
+
+table {
+    width: 100%;
+    background-color: var(--color);
+}
+
+table th, td {
+    background-color: var(--background-secondary);
 }
 
 .button {
@@ -56,11 +68,13 @@ form {
 
 /* Dark mode */
 .dark {
-    background-color: #0c2330;
     --color: white;
     --background : #112F41;
+    --background-secondary : #0c2330;
     --box-shadow: 0 0 .5em 0 rgba(255, 255, 255, .25);
     --box-shadow-hover: 0 0 .25em 0 rgba(255, 255, 255, .25);
+
+    background-color: var(--background);
 }
 
 .dark img {
