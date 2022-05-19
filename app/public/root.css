@@ -69,8 +69,8 @@ table th, td {
 /* Dark mode */
 .dark {
     --color: white;
-    --background : #112F41;
-    --background-secondary : #0c2330;
+    --background-secondary : #112F41;
+    --background : #0c2330;
     --box-shadow: 0 0 .5em 0 rgba(255, 255, 255, .25);
     --box-shadow-hover: 0 0 .25em 0 rgba(255, 255, 255, .25);
 
