@@ -55,6 +55,10 @@
                     fclose($handle);
                 }
             }
+
+            if (!$user_found) {
+                echo "<p>Aucune donnée n'a été trouvée pour vous.</p>";
+            }
         ?>
     </body>
 </html>
