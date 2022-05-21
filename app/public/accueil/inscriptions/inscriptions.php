@@ -1,4 +1,10 @@
 <?php 
+    if (!isset($_SESSION['droits']) || $_SESSION['droits'] !== "admin") {
+        header('Location: /accueil/accueil.php');
+        exit();
+    }
+
+
     if (isset($_FILES['file']) && $_FILES['file']['name'] !== "") {
         if ($_FILES['file']['error'] == 0 && explode('.', $_FILES['file']['name'])[1] == "csv") {
             $filename = 'students_to_add_temp.csv';

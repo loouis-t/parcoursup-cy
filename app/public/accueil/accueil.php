@@ -43,7 +43,8 @@
                         echo '<a class="button" href="/accueil/accueil.php?page=inscriptions">Inscrire élèves</a>';
                         echo '<a class="button" href="/accueil/accueil.php?page=logs">Logs</a>';
                         break;
-                    case "prof":
+                    case "Responsable admission":
+                        echo '<a class="button" href="/accueil/accueil.php?page=attributions">Modifier les attributions</a>';
                         break;
                     case "eleve":
                         echo '<a class="button" href="/accueil/accueil.php?page=scolarite">Ma scolarité</a>';
@@ -74,6 +75,9 @@
                                 break;
                             case "inscriptions":
                                 include 'inscriptions/inscriptions.php';
+                                break;
+                            case "attributions":
+                                include 'attributions/attributions.php';
                                 break;
                             default:
                                 include 'profil/profil.php';
