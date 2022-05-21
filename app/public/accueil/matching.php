@@ -1,6 +1,7 @@
 <?php
 
-function read_csv($file)
+//fonction qui lit le fichier csv et retourne une array
+function read_csv($file)    
 {
   $row      = 0;
   $csvArray = array();
@@ -20,6 +21,7 @@ function read_csv($file)
   }
 }
 
+//fonction qui supprime de maniere recursive un dossier
 function rrmdir($src) {
     $dir = opendir($src);
     while(false !== ( $file = readdir($dir)) ) {
@@ -37,7 +39,7 @@ function rrmdir($src) {
     rmdir($src);
 }
 
-
+//fonction qui assigne un nombre à chaque fillière
 function assign_number($string){
     if ($string == "ACTU") {
         return 0;
@@ -87,7 +89,7 @@ $csvData1 = read_csv("../../backend/db/choixEtudiantsParcours1.csv");
 $csvData2 = read_csv("../../backend/db/choixEtudiantsParcours2.csv");
 $csvData3 = read_csv("../../backend/db/choixEtudiantsParcours3.csv");
 
-
+//on supprime le dossier places finales si il existe deja pour repartir de 0 (c'est pas opti je sais)
 if (is_dir("../../backend/db/placesFinales")){
     rrmdir("../../backend/db/placesFinales");
     mkdir("../../backend/db/placesFinales", 0777, true);
@@ -181,6 +183,20 @@ foreach ($csvData3 as $key => $row) {
     }
 }
 
+///////////////////////////////////////////////////
+
+fclose($ACTU);
+fclose($HPDA);
+fclose($BI);
+fclose($CS);
+fclose($DS);
+fclose($FT);
+fclose($IAC);
+fclose($IAP);
+fclose($ICC);
+fclose($INEM);
+fclose($MMF);
+fclose($VISUA);
 
 
 //header("Location: http://localhost:8080/");
