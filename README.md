@@ -21,17 +21,9 @@ racine/
     |_ README.md        --> tah la documentation
 ```
 
-## Démarrer un serveur
-
-```
-./start.sh      (si bash par defaut)
-bash start.sh   (sinon)
-```
-
-Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
 
 
-## CHACUN SA BRANCHE !
+## Développer
 
 ```
 git clone git@gitlab.etude.eisti.fr:loouis-t/parcoursup-eisti.git   (pour récup le dossier)
@@ -55,4 +47,13 @@ git commit -m "<commentaire>"
 git push origin <nom de ta branche>
 ```
 
+## Démarrer un serveur
+
+```
+./start.sh      (si bash par defaut)
+bash start.sh   (sinon)
+```
+
+Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
+  
 **On s'occupe de tout fusionner avec @Baptiste**
