@@ -1,5 +1,9 @@
-table tr th {
-    width: 1000px;
+table {
+    width: unset;
+}
+
+table tr td {
+    padding: .5rem 1rem;
 }
 
 table tr td:first-of-type {

@@ -38,18 +38,18 @@
                 <a class="button" href="/accueil/accueil.php?page=profil">Mon profil</a>
 
                 <?php
-                switch ($_SESSION['droits']) {
-                    case "admin":
-                        echo '<a class="button" href="/accueil/accueil.php?page=inscriptions">Inscrire élèves</a>';
-                        echo '<a class="button" href="/accueil/accueil.php?page=logs">Logs</a>';
-                        break;
-                    case "Responsable admission":
-                        echo '<a class="button" href="/accueil/accueil.php?page=attributions">Modifier les attributions</a>';
-                        break;
-                    case "eleve":
-                        echo '<a class="button" href="/accueil/accueil.php?page=scolarite">Ma scolarité</a>';
-                        break;
-                }
+                    switch ($_SESSION['droits']) {
+                        case "admin":
+                            echo '<a class="button" href="/accueil/accueil.php?page=inscriptions">Inscrire élèves</a>';
+                            echo '<a class="button" href="/accueil/accueil.php?page=logs">Logs</a>';
+                            break;
+                        case "Responsable admission":
+                            echo '<a class="button" href="/accueil/accueil.php?page=attributions">Gestion des attributions</a>';
+                            break;
+                        case "eleve":
+                            echo '<a class="button" href="/accueil/accueil.php?page=scolarite">Ma scolarité</a>';
+                            break;
+                    }
                 ?>
 
                 <a class="button" href="/accueil/accueil.php?page=messagerie">Messagerie</a>
@@ -88,6 +88,8 @@
                     }
                 ?>
             </section>
+            
+            <div class="wave"></div>
         </article>
     </body>
 </html>

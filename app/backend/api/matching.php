@@ -199,7 +199,6 @@
     fclose($VISUA);
 
 
-    //header("Location: http://localhost:8080/");
-
-
+    header("Location: http://localhost:8080/accueil/accueil.php?page=attributions&state=success");
+    exit();
 ?>

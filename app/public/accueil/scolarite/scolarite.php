@@ -30,7 +30,7 @@
 
                             echo "<p><u>Moyenne :</u> " . $moyenne . "</p>";
                             echo "<p><u>Compte ECTS :</u> " . $ects . "</p>";
-                            echo "<p><u>Options choisies :</u>";
+                            echo "<p><u>Options demandées :</u>";
                             echo "
                                 <table>
                                     <tr>
@@ -55,6 +55,23 @@
                     fclose($handle);
                 }
             }
+
+            echo "<p><u>Parcours attribué :</u> ";
+            $PARCOURS = [ "ACTU", "BI", "CS", "DS", "FT", "HPDA", "IAC", "IAP", "ICC", "INEM", "MMF", "VISUA" ];
+            
+            foreach ($PARCOURS as $parcours) {
+                if(($handle = fopen("../../backend/db/placesFinales/".$parcours.".csv", "r")) !== FALSE) {
+                    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                        if ($data[2] === $_SESSION['mail']) {
+                            echo $parcours;
+                            break 2;
+                        }
+                    }
+                }
+                fclose($handle);
+            }
+
+            echo "</p>";
 
             if (!$user_found) {
                 echo "<p>Aucune donnée n'a été trouvée pour vous.</p>";

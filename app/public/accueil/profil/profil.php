@@ -2,34 +2,50 @@
     // si l'utilisateur a cliqué sur enregistrer
     if (
         isset($_POST['mail'])
+        && isset($_POST['password'])
         && isset($_POST['adresse'])
-        && $_POST['mail'] !== $_SESSION['mail']
+        && (
+            strtolower($_POST['mail']) !== strtolower($_SESSION['mail'])
+            || $_POST['password'] !== $_SESSION['password']
+            || $_POST['adresse'] !== $_SESSION['adresse']
+        )
     ) {
-        if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
+        // changer mail élève
+        // si user veut modifier son mail, on vérifie que le mail n'est pas déjà utilisé
+        if(
+            strtolower($_POST['mail']) !== strtolower($_SESSION['mail'])
+            && ($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE
+        ) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($data[2] === $_POST['mail']) {
                     fclose($handle);
-                    header('Location: /accueil/accueil.php?err=true&type=mail');
-                    exit();
+                        header('Location: /accueil/accueil.php?err=true&type=mail');
+                        exit();
+                    }
                 }
-            }
         }
-
+        // on change le mail (et l'adresse à y être)
         if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
             $fp = fopen("../../backend/db/identifiants_temp.csv", "w");
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                if ($data[2] !== $_SESSION['mail']) {
-                    fputcsv($fp, $data);    // ecrit les données dans le fichier temporaire
+                if (strtolower($data[2]) !== strtolower($_SESSION['mail'])) {                   // si la ligne ne correspond pas a celle qu'on cherche
+                    fputcsv($fp, $data);                                // ecrit les données dans le fichier temporaire
                 } else {
-                    $data[2] = strtolower($_POST['mail']);           // change le mail de l'élève
-                    if (isset($_POST['adresse']) && $_POST['adresse'] != 'inconnue') {
+                    // mail
+                    $data[2] = strtolower($_POST['mail']);              // change le mail de l'élève
+                    // adresse
+                    if ($_POST['adresse'] !== 'inconnue') {
                         if (isset($data[5])) {
-                            $data[5] = $_POST['adresse'];
+                            $data[5] = $_POST['adresse'];               // change adresse élève
                         } else {
-                            array_push($data, $_POST['adresse']); // ajoute l'adresse de l'eleve
+                            array_push($data, $_POST['adresse']);       // ajoute l'adresse de l'eleve
                         }
                     }
-                    fputcsv($fp, $data);   // rajouter la ligne modifiée
+                    // mot de passe
+                    if ($_POST['password'] !== 't\'as cru mdr') {
+                        $data[3] = hash('sha256', $_POST['password']);  // change le mot de passe de l'élève
+                    }
+                    fputcsv($fp, $data);                                // rajouter la ligne modifiée
                 }
             }
             fclose($fp);
@@ -77,6 +93,10 @@
             header('Location: /accueil/accueil.php?err=true&type=pdp');
             exit();
         }
+
+        header('Location: /accueil/accueil.php?err=false&type=success');
+        exit();
+
     }
 ?>
 
@@ -113,6 +133,9 @@
                     Adresse mail : <input type="email" name="mail" value="<?php echo $_SESSION['mail'];?>">
                 </label>
                 <label>
+                    Mot de passe : <input type="password" name="password" value="t'as cru mdr">
+                </label>
+                <label>
                     Photo de profil : <u>changer</u>
                     <input class="pdp-uploader" name="pdp" type="file" accept="image/jpg, image/png, image/jpeg">
                 </label>
@@ -133,6 +156,9 @@
                                     break;
                                 case "pdp_size":
                                     echo '<p class="error">Veuillez importer une image inférieure à 5mo.</p>';
+                                    break;
+                                case "success":
+                                    echo '<p class="success">Modifications effectuées avec succès.</p>';
                                     break;
                             default:
                                 break;

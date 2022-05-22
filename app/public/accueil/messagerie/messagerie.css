@@ -18,6 +18,8 @@ h2 .button {
     height: max-content;
 
     overflow: visible;
+
+    background-color: transparent;
 }
 
 .messagerie__destinataires {

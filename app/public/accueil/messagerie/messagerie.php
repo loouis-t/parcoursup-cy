@@ -22,7 +22,7 @@
             fclose($handle_users);
         }
         if ($user === false) {
-            header('Location: /accueil/accueil.php?page=messagerie&err=dest');
+            header('Location: /accueil/accueil.php?page=messagerie&err=dest&dest='.$_POST['dest']);
             exit();
         }
     }
@@ -53,16 +53,17 @@
                             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                                 // afficher toutes les conversations qui me concernent
                                 if (
-                                    // là où je suis expéditeur
                                     (
+                                        // là où je suis expéditeur
                                         strtolower($data[2]) == strtolower($_SESSION['mail'])
                                         && !in_array($data[3], $unique_conv)
                                     ) || (
+                                        // là où je suis destinataire
                                         strtolower($data[3]) == strtolower($_SESSION['mail'])
                                         && !in_array($data[2], $unique_conv)
                                     )
                                 ) {
-                                    if ($data[2] == $_SESSION['mail']) {
+                                    if ($data[2] === strtolower($_SESSION['mail'])) {
                                         $destinataire = $data[3];
                                     } else {
                                         $destinataire = $data[2];
@@ -90,17 +91,25 @@
             <section class="messagerie__conversation">
                 <div class="messagerie__conversation__messages">
                     <?php
-                        if (isset($_POST['dest'])) {
+                        if(isset($_GET['err']) && $_GET['err'] === 'dest') {
+                            echo '<p class="error" style="align-self: center;">Cet utilisateur n\'a pas encore créé de compte sur la platefrome.</p>';
+                        }
+                        // récupérer les messages de la conversation
+                        if (
+                            isset($_POST['dest'])
+                            || isset($_GET['dest'])
+                        ) {
+                            $destinataire = (isset($_POST['dest'])) ? $_POST['dest'] : $_GET['dest'];
                             if(($handle = fopen("../../backend/db/messagerie.csv", "r")) !== FALSE) {
                                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                                     if(
                                         strtolower($_SESSION['mail']) == strtolower($data[2])
-                                        && strtolower($_POST['dest']) == strtolower($data[3])
+                                        && strtolower($destinataire) == strtolower($data[3])
                                     ) {
                                         // messages que j'ai envoyé
-                                        echo "<p class='right'>".$data[4]."<span>".$data[1]."</span></p>";
+                                        echo "<p class='right'>" . htmlspecialchars_decode($data[4]) . "<span>" . $data[1] . "</span></p>";
                                     } else if (
-                                        strtolower($_POST['dest']) == strtolower($data[2])
+                                        strtolower($destinataire) == strtolower($data[2])
                                         && strtolower($_SESSION['mail']) == strtolower($data[3])
                                     ) {
                                         // messages que j'ai reçu
@@ -113,10 +122,14 @@
                     ?>
                 </div>
                 <?php 
-                    if(isset($_POST['dest'])) {
+                    if(
+                        isset($_POST['dest'])
+                        || isset($_GET['dest'])
+                    ) {
+                        $destinataire = (isset($_POST['dest'])) ? $_POST['dest'] : $_GET['dest'];
                         echo '
                             <form class="messagerie__conversation__form" action="/accueil/accueil.php?page=messagerie" method="post">
-                                <input type="hidden" name="dest" value="' . $_POST['dest'] . '">
+                                <input type="hidden" name="dest" value="' . $destinataire . '">
                                 <input type="text" name="message" placeholder="Message" autocomplete="off">
                                 <input class="button" type="submit" name="envoyer" value="Envoyer">
                             </form>';

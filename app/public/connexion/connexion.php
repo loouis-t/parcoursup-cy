@@ -23,11 +23,13 @@
                             strtolower(str_replace(' ', '', $_POST['mail'])) == strtolower($data[2])
                             && hash('sha256', $_POST['pw']) == $data[3]
                         ) {
-                            $_SESSION['prenom'] = $data[0];     // stocker prenom dans session
-                            $_SESSION['nom'] = $data[1];        // stocker nom dans session
-                            $_SESSION['mail'] = $_POST['mail']; // cookie mail
-                            $_SESSION['droits'] = $data[4];     // cookie droits (eleve/prof/admin)
-                            fclose($handle);                    // libérer csv
+                            $_SESSION['prenom'] = $data[0];                                                             // stocker prenom dans session
+                            $_SESSION['nom'] = $data[1];                                                                // stocker nom dans session
+                            $_SESSION['mail'] = $_POST['mail'];                                                         // cookie mail
+                            isset($data[5]) ? $_SESSION['adresse'] = $data[5] : $_SESSION['adresse'] = 'inconnue';      // cookie adresse
+                            $_SESSION['droits'] = $data[4];                                                             // cookie droits (eleve/prof/admin)
+                            
+                            fclose($handle);                                                                            // libérer csv
                             header('Location: /accueil/accueil.php');
                             exit();
                         }

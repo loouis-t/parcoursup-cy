@@ -38,6 +38,12 @@ article {
     width: 100%; height: calc(100vh - 6rem);
 
     display: flex;
+
+    background-color: var(--background-secondary);
+}
+
+article > * {
+    z-index: 1;
 }
 
 article nav {
