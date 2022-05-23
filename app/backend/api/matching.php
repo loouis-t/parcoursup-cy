@@ -1,7 +1,7 @@
 <?php
 
     // fonction qui lit le fichier csv et retourne une array
-    function read_csv($file)    
+    function read_csv($file)
     {
         $row      = 0;
         $csvArray = array();
@@ -198,6 +198,13 @@
     fclose($MMF);
     fclose($VISUA);
 
+    ///////////////////////////////////////////////////
+
+    // log : répartition auto des élèves
+    date_default_timezone_set('Europe/Paris'); // UTC+2 au lieu de UTC
+    $logs = fopen("../../backend/db/logs.csv", "a+");
+    fputcsv($logs, [ date('Y-m-d'), date('H:i:s'), "'matching.php' : répartition automatique des élèves." ]);
+    fclose($logs);
 
     header("Location: http://localhost:8080/accueil/accueil.php?page=attributions&state=success");
     exit();

@@ -7,21 +7,24 @@
             while (($data_users = fgetcsv($handle_users, 1000, ",")) !== FALSE) {
                 if (strtolower($data_users[2]) === strtolower($_POST['dest'])) {
                     $user = true;
-                    // poster le message si user existe
+                    break;
                 }
             }
             fclose($handle_users);
         }
+
+        // ajouter message s'il est post
         if (isset($_POST['message'])) {
-           if(($handle = fopen("../../backend/db/messagerie.csv", "a+")) !== FALSE) {
-             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $message = [ date("Y-m-d"), date("H:i:s"), strtolower($_SESSION['mail']), strtolower($_POST['dest']), htmlspecialchars($_POST['message']) ];
-                fputcsv($handle, $message);
-             }
-             fclose($handle);
-          }
-       }
-       
+            if(($handle = fopen("../../backend/db/messagerie.csv", "a+")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $message = [ date("Y-m-d"), date("H:i:s"), strtolower($_SESSION['mail']), strtolower($_POST['dest']), htmlspecialchars($_POST['message']) ];
+                    fputcsv($handle, $message);
+                }
+                fclose($handle);
+            }
+        }
+
+        // si l'utilisateur n'existe pas, on affiche un message
         if ($user === false) {
             header('Location: /accueil/accueil.php?page=messagerie&err=dest&dest=' . $_POST['dest']);
             exit();

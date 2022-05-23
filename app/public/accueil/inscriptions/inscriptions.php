@@ -1,4 +1,4 @@
-<?php 
+<?php
     if (!isset($_SESSION['droits']) || $_SESSION['droits'] !== "admin") {
         header('Location: /accueil/accueil.php');
         exit();
@@ -84,7 +84,7 @@
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
         <h2>Inscrire des élèves en masse</h2>
