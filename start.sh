@@ -5,6 +5,23 @@ function start_php_server() {
     php -S localhost:8080 -t app/public/
 }
 
+function show_help() {
+    echo ""
+    echo "           ========================="
+    echo "            Démarrer un serveur php"
+    echo "           ========================="
+    echo ""
+    echo "Louis Travaux | Yan Arresseguet | Baptiste Hennuy"
+    echo "  Ugo Latry   | Edouard Calzado |"
+    echo ""
+    echo "bash start.sh [OPTION]      ou      ./start.sh [OPTIONS] (si bash par défaut)"
+    echo ""
+    echo "[OPTIONS]"
+    echo "  -p, --prod      : démarre un serveur en mode production (branche main)"
+    echo "  -h, --help      : affiche l'aide"
+    echo "  <aucune option> : lance un serveur en mode développement (branche tierce)"
+    echo ""
+}
 
 function switch_branch() {
     git checkout main
@@ -47,7 +64,7 @@ function switch_branch() {
         git checkout $BRANCH
     }
 
-    # l'utilisateur veut peut etre récup ses modifs distantes? 
+    # l'utilisateur veut peut etre récup ses modifs distantes?
     printf "Voulez-vous récupérer les modifications de votre branche ($BRANCH)? (y/n) : "
     read RECUPERER_BRANCH
     if [[ "$RECUPERER_BRANCH" == "y" ]]; then
@@ -58,7 +75,7 @@ function switch_branch() {
         }
     fi
 
-    # l'utilisateur veut peut etre se synchroniser avec la branche principale? 
+    # l'utilisateur veut peut etre se synchroniser avec la branche principale?
     printf "Voulez-vous suivre la branche 'main' (dans '$BRANCH')? (y/n) : "
     read SUIVRE_MAIN
     if [[ "$SUIVRE_MAIN" == "y" ]]; then
@@ -74,19 +91,32 @@ function switch_branch() {
 
 }
 
-switch_branch
-{
-    start_php_server
-} || {
-    echo "Installer  php?"
-    read res
-    if [ $res = "y" ]; then
-        echo "Installation php ..."
-        sudo apt install php
-        echo "Installation php terminée"
-
-        start_php_server
-    else
-        echo "Abandon"
+if [[ $1 ]]; then
+    if [[ "$1" = "-p" ]] || [[ "$1" = "--prod" ]]; then
+        {
+            git switch -f main
+            start_php_server
+        } || {
+            exit
+        }
+    elif [[ "$1" = "-h" ]] || [[ "$1" = "--help " ]]; then
+        show_help
     fi
-}
+else
+    switch_branch
+    {
+        start_php_server
+    } || {
+        echo "Installer  php?"
+        read res
+        if [ $res = "y" ]; then
+            echo "Installation php ..."
+            sudo apt install php
+            echo "Installation php terminée"
+
+            start_php_server
+        else
+            echo "Abandon"
+        fi
+    }
+fi
