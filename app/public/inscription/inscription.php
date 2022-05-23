@@ -104,6 +104,7 @@
 
                 <p>Vous avez déjà un compte? <a href="../connexion/connexion.php">Connectez vous</a>!</p>
             </div>
+            <div class="wave"></div>
         </article>
     </body>
 </html>

@@ -28,7 +28,7 @@
                             $_SESSION['mail'] = $_POST['mail'];                                                         // cookie mail
                             isset($data[5]) ? $_SESSION['adresse'] = $data[5] : $_SESSION['adresse'] = 'inconnue';      // cookie adresse
                             $_SESSION['droits'] = $data[4];                                                             // cookie droits (eleve/prof/admin)
-                            
+
                             fclose($handle);                                                                            // libérer csv
                             header('Location: /accueil/accueil.php');
                             exit();
@@ -39,7 +39,7 @@
                 header('Location: /connexion/connexion.php?err=true');
                 exit();
             }
-        } 
+        }
     }
 ?>
 
@@ -82,6 +82,7 @@
 
                 <p>Pas encore de compte? <a href="../inscription/inscription.php">Inscrivez vous</a>!</p>
             </div>
+            <div class="wave"></div>
         </article>
     </body>
 </html>

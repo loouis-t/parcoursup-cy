@@ -7,22 +7,23 @@
             while (($data_users = fgetcsv($handle_users, 1000, ",")) !== FALSE) {
                 if (strtolower($data_users[2]) === strtolower($_POST['dest'])) {
                     $user = true;
-                    // poster le message s'il existe
-                    if (isset($_POST['message'])) {
-                        if(($handle = fopen("../../backend/db/messagerie.csv", "a+")) !== FALSE) {
-                            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                                $message = [ date("Y-m-d"), date("H:i:s"), strtolower($_SESSION['mail']), strtolower($_POST['dest']), htmlspecialchars($_POST['message']) ];
-                                fputcsv($handle, $message);
-                            }
-                            fclose($handle);
-                        }
-                    }
+                    // poster le message si user existe
                 }
             }
             fclose($handle_users);
         }
+        if (isset($_POST['message'])) {
+           if(($handle = fopen("../../backend/db/messagerie.csv", "a+")) !== FALSE) {
+             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $message = [ date("Y-m-d"), date("H:i:s"), strtolower($_SESSION['mail']), strtolower($_POST['dest']), htmlspecialchars($_POST['message']) ];
+                fputcsv($handle, $message);
+             }
+             fclose($handle);
+          }
+       }
+       
         if ($user === false) {
-            header('Location: /accueil/accueil.php?page=messagerie&err=dest&dest='.$_POST['dest']);
+            header('Location: /accueil/accueil.php?page=messagerie&err=dest&dest=' . $_POST['dest']);
             exit();
         }
     }
@@ -40,7 +41,7 @@
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
         <h2>Messagerie</h2>
@@ -75,10 +76,15 @@
                             fclose($handle);
 
                             if (
-                                isset($_POST['dest'])
-                                && !in_array($_POST['dest'], $unique_conv)
+                               isset($_POST['dest'])
+                               && !in_array($_POST['dest'], $unique_conv)
                             ) {
                                 echo '<input class="button" type="submit" name="dest" value="' . $_POST['dest'] . '">';
+                            } else if (
+                               isset($_GET['dest'])
+                               && !in_array($_GET['dest'], $unique_conv)
+                            ) {
+                                echo '<input class="button" type="submit" name="dest" value="' . $_GET['dest'] . '">';
                             }
                         }
                     ?>
@@ -121,21 +127,21 @@
                         }
                     ?>
                 </div>
-                <?php 
+                <?php
                     if(
                         isset($_POST['dest'])
                         || isset($_GET['dest'])
                     ) {
-                        $destinataire = (isset($_POST['dest'])) ? $_POST['dest'] : $_GET['dest'];
+                        $destinataire = isset($_POST['dest']) ? $_POST['dest'] : $_GET['dest'];
                         echo '
                             <form class="messagerie__conversation__form" action="/accueil/accueil.php?page=messagerie" method="post">
-                                <input type="hidden" name="dest" value="' . $destinataire . '">
+                                <input type="hidden" name="dest" value="' . htmlspecialchars(strtolower($destinataire)) . '">
                                 <input type="text" name="message" placeholder="Message" autocomplete="off">
                                 <input class="button" type="submit" name="envoyer" value="Envoyer">
                             </form>';
                     }
                 ?>
-                
+
             </section>
         </article>
     </body>

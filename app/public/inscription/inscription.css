@@ -1,9 +1,16 @@
 article {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 12rem);
+    height: calc(100vh - 6rem);
+
+    background-color: var(--background-secondary);
+}
+
+article > * {
+   z-index: 1;
 }
 
 article .box {
@@ -16,6 +23,7 @@ article .box {
 
     box-shadow: var(--box-shadow);
     border-radius: 1em;
+    background-color: var(--background-secondary);
 }
 
 article .box h2 {
@@ -34,7 +42,6 @@ article .box form .button {
     width: min-content; height: min-content;
     padding: .25em 1em;
 
-    background-color: var(--background);
     border: none;
     border-radius: .5em;
     box-shadow: var(--box-shadow) ;
