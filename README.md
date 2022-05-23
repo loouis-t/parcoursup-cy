@@ -1,7 +1,5 @@
 # Parcoursup-EISTI
 
-*(si vous avez des meilleures idées pour le nom...)*
-
 Répartition des options suivant choix ING2
 
 ## Structure
@@ -21,16 +19,14 @@ racine/
     |_ README.md        --> tah la documentation
 ```
 
-
-
-## Développer
+## Développement
 
 ```
 git clone git@gitlab.etude.eisti.fr:loouis-t/parcoursup-eisti.git   (pour récup le dossier)
 cd parcoursup-eisti
 ```
 
-**RQ :**```./start.sh``` fait le ```checkout``` et le ```pull``` ci-dessous pour vous.
+**RQ :**```bash start.sh``` (ou ```./start.sh``` si bash présent sur le pc) fait le ```checkout``` et le ```pull``` expliqués ci-dessous pour vous.
 
 ```
 git checkout -b <nom de ta branche>                                 (pour créer ta branche en local)
@@ -47,13 +43,20 @@ git commit -m "<commentaire>"
 git push origin <nom de ta branche>
 ```
 
-## Démarrer un serveur
+**Note :**
+
+Les branches sont désignées par le nom du développeur par simplicité, mais elles correspondent (plus ou moins) au développement (ou au débugage) d'une fonction.  
+Attention: une branche est supprimée (localement et à distance) dès lors que vous acceptez de suivre la branche 'main' (choix proposé à l'exécution de ```start.sh```).
+
+## Production
+
+Démarrer un serveur en mode production (sur la branche 'main' : théoriquement stable)
 
 ```
-./start.sh      (si bash par defaut)
-bash start.sh   (sinon)
+./start.sh    --prod  (si bash par defaut)
+bash start.sh --prod  (sinon)
 ```
+
+**Note :** ```-p est un raccourci de --prod``` fonctionne aussi.
 
 Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
-  
-**On s'occupe de tout fusionner avec @Baptiste**
