@@ -14,7 +14,7 @@
         }
 
         // ajouter message s'il est post
-        if (isset($_POST['message'])) {
+        if (isset($_POST['message']) && $_POST['message'] !== '') {
             if(($handle = fopen("../../backend/db/messagerie.csv", "a+")) !== FALSE) {
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     $message = [ date("Y-m-d"), date("H:i:s"), strtolower($_SESSION['mail']), strtolower($_POST['dest']), htmlspecialchars($_POST['message']) ];
@@ -79,13 +79,15 @@
                             fclose($handle);
 
                             if (
-                               isset($_POST['dest'])
-                               && !in_array($_POST['dest'], $unique_conv)
+                                isset($_POST['dest'])
+                                && $_POST['dest'] !== ''
+                                && !in_array($_POST['dest'], $unique_conv)
                             ) {
                                 echo '<input class="button" type="submit" name="dest" value="' . $_POST['dest'] . '">';
                             } else if (
-                               isset($_GET['dest'])
-                               && !in_array($_GET['dest'], $unique_conv)
+                                isset($_GET['dest'])
+                                && $_GET['dest'] !== ''
+                                && !in_array($_GET['dest'], $unique_conv)
                             ) {
                                 echo '<input class="button" type="submit" name="dest" value="' . $_GET['dest'] . '">';
                             }
@@ -93,7 +95,7 @@
                     ?>
                 </form>
                 <form class="messagerie__form" action="/accueil/accueil.php?page=messagerie" method="post">
-                    <input type="text" name="dest" placeholder="Destinataire" autocomplete="off">
+                    <input type="text" name="dest" placeholder="Destinataire" autocomplete="off" required>
                     <input class="button" type="submit" value="+">
                 </form>
             </div>

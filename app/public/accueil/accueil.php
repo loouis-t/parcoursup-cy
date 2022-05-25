@@ -91,5 +91,6 @@
             
             <div class="wave"></div>
         </article>
+        <?php include('../footer.php'); ?>
     </body>
 </html>

@@ -69,7 +69,7 @@
                 <h2>Connexion</h2>
 
                 <form action="connexion.php" method="post">
-                    <input type="mail" name="mail" placeholder="e-mail" required>
+                    <input type="text" name="mail" placeholder="e-mail" required>
                     <input type="password" name="pw" placeholder="Mot de passe" required>
 
                     <?php
@@ -84,5 +84,6 @@
             </div>
             <div class="wave"></div>
         </article>
+        <?php include '../footer.php'; ?>
     </body>
 </html>

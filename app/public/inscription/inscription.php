@@ -90,7 +90,7 @@
                 <form action="inscription.php" method="post">
                     <input type="text" name="prenom" placeholder="Prénom" required>
                     <input type="text" name="nom" placeholder="Nom" required>
-                    <input type="mail" name="mail" placeholder="e-mail" required>
+                    <input type="text" name="mail" placeholder="e-mail" required>
                     <input type="password" name="pw" placeholder="Mot de passe" required>
 
                     <?php
@@ -106,5 +106,6 @@
             </div>
             <div class="wave"></div>
         </article>
+        <?php include '../footer.php'; ?>
     </body>
 </html>
