@@ -33,5 +33,61 @@
                 fclose($handle);
             ?>
         </table>
+
+        <br>
+        <h2>Logs signalements</h2>
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Signaleur</th>
+                <th>Signalé</th>
+                <th>Message signalé</th>
+            </tr>
+            <?php
+                if(($handle = fopen("../../backend/db/signalements.csv", "r")) !== FALSE) {
+                    fgetcsv($handle, 1000, ","); // ignore la première ligne
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        echo '<tr>';
+                        echo '<td>' . $data[0] . '</td>';
+                        echo '<td>' . $data[1] . '</td>';
+                        echo '<td>' . $data[3] . '</td>';
+                        echo '<td>' . $data[2] . '</td>';
+                        echo '<td>' . $data[4] . '</td>';
+                        echo '</tr>';
+                    }
+                }
+                fclose($handle);
+            ?>
+        </table>
+
+        <br>
+        <h2>Logs blocages</h2>
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Bloqueur</th>
+                <th>Bloqué</th>
+                <th>Motif</th>
+            </tr>
+            <?php
+                if(($handle = fopen("../../backend/db/utilisateurs_bloques.csv", "r")) !== FALSE) {
+                    fgetcsv($handle, 1000, ','); // ignore la première ligne
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        echo '<tr>';
+                        echo '<td>' . $data[0] . '</td>';
+                        echo '<td>' . $data[1] . '</td>';
+                        echo '<td>' . $data[2] . '</td>';
+                        echo '<td>' . $data[3] . '</td>';
+                        echo '<td>' . $data[4] . '</td>';
+                        echo '</tr>';
+                    }
+                }
+                fclose($handle);
+            ?>
+        </table>
     </body>
 </html>

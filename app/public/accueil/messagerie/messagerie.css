@@ -79,6 +79,8 @@ h2 .button {
     
     max-height: calc(100vh - 15rem);
     padding: .5rem 1rem;
+
+    overflow: visible;
 }
 
 .messagerie__conversation .messagerie__conversation__messages .left, .right {
@@ -88,16 +90,14 @@ h2 .button {
     align-items: center;
 
     width: max-content;
-    max-width: 50%;
-    min-height: 2.5rem;
-
+    max-width: 50%; min-height: 2.5rem;
     padding: .5rem 1rem;
     
     background-color: var(--background-secondary);
     box-shadow: var(--box-shadow);
-
     border-radius: .75rem;
 
+    transition: 100ms all ease-out;
     overflow: visible;
 }
 
@@ -105,7 +105,7 @@ h2 .button {
     align-self: flex-end;
 }
 
-span {
+span:first-of-type {
     position: absolute;
     font-size: .75rem;
     padding: 0;
@@ -113,20 +113,47 @@ span {
     opacity: .5;
 }
 
-.left span {
+.left span:first-of-type {
     transform: translateY(-50%);
     left: calc(100% + 1rem); top: 50%;
 }
 
-.right span {
+.right span:first-of-type {
     transform: translate(-100%, -50%);
     left: -1rem; top: 50%;
 }
 
+span:not(:first-of-type) {
+    position: absolute;
+    display: none; /* activer depuis js (options__active)*/
+    column-gap: .5rem;
+
+    transform: translate(-50%, -100%);
+    top: -.5rem; left: 50%;
+    overflow: visible;
+}
+
+span:not(:first-of-type) a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+    width: 30px; height: 30px;
+    
+    border-radius: 50%;
+    box-shadow: var(--box-shadow);
+}
+
+/* padding sous le panneau attention pour centrage visuel*/
+span:not(:first-of-type) a.signaler {
+    padding-bottom: .25rem;
+}
+
+
 .messagerie__conversation .messagerie__conversation__messages >:last-child {
     margin-bottom: 5rem;
 }
-
 
 .messagerie__conversation__form {
     display: flex;
@@ -148,3 +175,41 @@ span {
     text-align: left;
 }
 
+.messagerie__conversation__form div {
+    display: flex;
+    column-gap: .5rem;
+
+    overflow: visible;
+}
+
+.messagerie__conversation__form input[type="submit"] {
+    width: 7.5rem;
+}
+
+.messagerie__conversation__form .bloquer, .messagerie__conversation__form abbr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+
+    border-radius: 50%;
+}
+
+/* OPTIONS ACTIVE */
+
+.options__active {
+    transform: scale(1.05);
+}
+
+.options__active span {
+    display: flex;
+}
+
+.options__inactive {
+    filter: blur(2px);
+}
+
+.utilisateur_bloque {
+    filter: blur(10px);
+}

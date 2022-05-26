@@ -25,7 +25,7 @@
                         ) {
                             $_SESSION['prenom'] = $data[0];                                                             // stocker prenom dans session
                             $_SESSION['nom'] = $data[1];                                                                // stocker nom dans session
-                            $_SESSION['mail'] = $_POST['mail'];                                                         // cookie mail
+                            $_SESSION['mail'] = strtolower($_POST['mail']);                                                         // cookie mail
                             isset($data[5]) ? $_SESSION['adresse'] = $data[5] : $_SESSION['adresse'] = 'inconnue';      // cookie adresse
                             $_SESSION['droits'] = $data[4];                                                             // cookie droits (eleve/prof/admin)
 

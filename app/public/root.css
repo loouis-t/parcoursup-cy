@@ -255,7 +255,7 @@ footer .devs {
     align-items: center;
 
     flex-wrap: wrap;
-    
+
     overflow: visible;
 }
 
@@ -278,4 +278,3 @@ footer:hover .devs p:nth-of-type(4) {
         transform: rotateZ(360deg);
     }
 }
-

@@ -88,7 +88,7 @@
                 <h2>Inscription</h2>
 
                 <form action="inscription.php" method="post">
-                    <input type="text" name="prenom" placeholder="Prénom" required>
+                    <input class="focus" type="text" name="prenom" placeholder="Prénom" required>
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="mail" placeholder="e-mail" required>
                     <input type="password" name="pw" placeholder="Mot de passe" required>
