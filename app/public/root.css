@@ -208,7 +208,6 @@ input:checked + .slider:after {
 }
 
 
-
 /* la ptite wave a l'arriere */
 /* C'est bon @Ugo, c'est plus un pseudo-element */
 article .wave {
@@ -220,8 +219,7 @@ article .wave {
     z-index: 0;
 }
 
-
-
+/* ////// FOOTER ////// */
 footer {
     display: flex;
     flex-direction: column;
@@ -257,6 +255,8 @@ footer .devs {
     align-items: center;
 
     flex-wrap: wrap;
+    
+    overflow: visible;
 }
 
 footer p {

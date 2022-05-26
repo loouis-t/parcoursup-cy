@@ -1,4 +1,17 @@
 <?php
+    // fonction pour générer un mot de passe aléatoire
+    function randomPassword() {
+        $caracteres_dispo = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-&@!+=*#<>µ$£%';
+        $mot_de_passe = array();                                // array qui contiendra le password
+        $nb_caract_dispo = strlen($caracteres_dispo) - 1;       // longueur de l'alphabet
+        for ($i = 0; $i < 10; $i++) {                           // on génère 10 caractères
+            $n = rand(0, $nb_caract_dispo);
+            $mot_de_passe[] = $caracteres_dispo[$n];
+        }
+        return implode($mot_de_passe);                          // convertir array en string
+    }
+
+
     if (!isset($_SESSION['droits']) || $_SESSION['droits'] !== "admin") {
         header('Location: /accueil/accueil.php');
         exit();
@@ -43,7 +56,7 @@
                     $fp = fopen("../../backend/db/identifiants.csv", "a+");
                     if (!$mail_already_exists) {
                         // add student
-                        fputcsv($fp, [ $data[0], $data[1], $data[2], hash('sha256', 'admin'), 'eleve' ]);
+                        fputcsv($fp, [ $data[0], $data[1], $data[2], hash('sha256', randomPassword()), 'eleve' ]);
                         $counter++;
                     }
                     fclose($fp);    // close file
