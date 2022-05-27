@@ -107,9 +107,9 @@ else
     {
         start_php_server
     } || {
-        echo "Installer  php?"
+        printf "Installer  php? (y/n) :"
         read res
-        if [ $res = "y" ]; then
+        if [[ $res = "y" ]]; then
             echo "Installation php ..."
             sudo apt install php
             echo "Installation php terminée"
