@@ -1,3 +1,7 @@
+header .button {
+    width: max-content;
+}
+
 article {
     position: relative;
     width: 100vw; min-height: calc(100vh - 6rem);
@@ -31,4 +35,3 @@ article img {
     width: 40%;
     z-index: 1;
 }
-

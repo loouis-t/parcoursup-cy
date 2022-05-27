@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,8 +22,16 @@
         <header>
             <a href="/"><h1>parcoursup-eisti</h1></a>
             <div>
-                <a href="connexion/connexion.php" class="button">Connexion</a>
-                <a href="inscription/inscription.php" class="button">Inscription</a>
+                <?php
+                    // connexion/inscription || mon compte/deconnexion
+                    if (!isset($_SESSION['mail'])) {
+                        echo '<a href="connexion/connexion.php" class="button">Connexion</a>
+                        <a href="inscription/inscription.php" class="button">Inscription</a>';
+                    } else {
+                        echo '<a href="accueil/accueil.php" class="button">Mon compte</a>
+                        <a class="button" href="/accueil/accueil.php?&deco=true">Déconnexion</a>';
+                    }
+                ?>
                 <label class="switch"><input class="checkbox" type="checkbox"><span class="slider round" onclick="dark()"></span></label>
             </div>
         </header>
