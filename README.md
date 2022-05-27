@@ -3,8 +3,6 @@
 Plateforme de répartition des options d'ING3 suivant les choix et les moyennes des ING2.  
 Une sorte de parcoursup, mais en moins bien.
 
----
-
 ## Production
 
 Démarrer un serveur en mode production (sur la branche 'main' : théoriquement stable)
@@ -18,8 +16,6 @@ bash start.sh --prod  (sinon)
 
 Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
   
----
-
 ## Développement
 
 ```
@@ -37,7 +33,6 @@ git pull origin <nom de ta branche distante>                        (pour récup
 
 **Voir le site :** ```ctrl + clic``` sur ```localhost:8080``` dans le terminal (ou [ici](http://localhost:8080)).
   
-
 **Pour publier :**
 
 ```
@@ -49,8 +44,6 @@ git push origin <nom de ta branche>
 **Note :** Les branches sont désignées par le nom du développeur par simplicité, mais elles correspondent (plus ou moins) au développement (ou au débugage) d'une fonction.  
 *Attention:* une branche est supprimée (localement et à distance) dès lors que vous acceptez de suivre la branche 'main' (choix proposé à l'exécution de ```start.sh```).
   
----
-
 ## Structure
 
 ```
@@ -69,6 +62,7 @@ racine/
 ```
 
 ---
+
 © 2022, parcoursup-eisti  
 Louis Travaux, Baptiste Hennuy, Ugo Latry, Yan Arresseguet, Edouard Calzado  
 CY-Tech Pau, P2
