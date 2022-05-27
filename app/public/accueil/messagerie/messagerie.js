@@ -58,7 +58,7 @@ function handle_exit() {
 
 // option de message: supprimer
 function message_supprimer(e) {
-    const message = e.parentNode.parentNode.innerHTML.split('<span>')[0];   // message
+    const message = e.parentNode.parentNode.parentNode.innerHTML.split('<span>')[0];   // message
     const heure = e.parentNode.parentNode.childNodes[1].innerHTML;          // heure
 
     window.location.search.split('&').forEach((element) => {
@@ -86,8 +86,8 @@ function message_supprimer(e) {
 
 // option de message: signaler
 function message_signaler(e) {
-    const message = e.parentNode.parentNode.innerHTML.split('<span>')[0];   // message
-    const heure = e.parentNode.parentNode.childNodes[1].innerHTML;          // heure
+    const message = e.parentNode.parentNode.parentNode.innerHTML.split('<span>')[0];   // message
+    const heure = e.parentNode.parentNode.parentNode.childNodes[1].innerHTML;          // heure
 
     window.location.search.split('&').forEach((element) => {
         if (
@@ -102,11 +102,9 @@ function message_signaler(e) {
                 if (this.readyState == 4 && this.status == 200) {
                     if (this.responseText == "success") {
                         alert(
-                            `Nous avons bien pris en compte votre signalement.\nNous vous remercions de votre contribution, nous prendrons en compte votre demande dans les plus brefs délais.\n\nPersonne signalée : ${destinataire}.
+                            `Nous avons bien pris en compte votre signalement.\nNous vous remercions de votre contribution.\n\nPersonne signalée : ${destinataire}.
                             `);
-                    } else {
-                        alert(this.responseText);
-                    }
+                    } else { alert(this.responseText); }
                     return;
                 }
             }
@@ -120,53 +118,59 @@ function message_signaler(e) {
 
 // fonction pour bloquer le destinataire
 function bloquer(e) {
-    let res = confirm("Etes vous sûr de vouloir bloquer cet utilisateur?");
-    if (res) {
-        const motif = prompt("Veuillez indiquer un motif de blocage : ");
-        console.log(motif);
-        window.location.search.split('&').forEach((element) => {
-            if (
-                element.split('=')[0] == 'dest'
-                && element.split('=')[1] != ''
-            ) {
-                const destinataire = element.split('=')[1];
-                const signaleur = e.name;
+    let xhr, destinataire, signaleur;
 
-                // envoyer requête ajax pour bloquer le destinataire
-                let xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        if (this.responseText == "success") {
+    window.location.search.split('&').forEach((element) => {
+        if (
+            element.split('=')[0] == 'dest'
+            && element.split('=')[1] != ''
+        ) {
+            destinataire = element.split('=')[1];
+            signaleur = e.name;
+            xhr = new XMLHttpRequest();
+        } else { return; }
+    });
 
-                            // blur les messages (droite et gauche)
-                            document.querySelectorAll('.right').forEach((child) => {
-                                child.classList.add('utilisateur_bloque');
-                            });
-                            document.querySelectorAll('.left').forEach((child) => {
-                                child.classList.add('utilisateur_bloque');
-                            });
-                        
-                            // préciser que l'utilisateur est bloqué
-                            document.querySelector('.error').innerHTML = "Vous avez bloqué cet utilisateur.";
-                            
-                            // blur input [text] et [submit]
-                            document.querySelectorAll('.toHide').forEach((child) => {
-                                console.log(child);
-                                child.classList.add('utilisateur_bloque');
-                                child.ariaDisabled = true;
-                            });
-
-                        } else {
-                            alert(this.responseText);
-                        }
-                        return;
-                    }
-                }
+    // si le destinataire n'est pas bloqué, on le bloque
+    if (!inputArea.classList.contains('utilisateur_bloque')) {
+        let res = confirm("Etes vous sûr de vouloir bloquer cet utilisateur?");
+        if (res) {
+            const motif = prompt("Veuillez indiquer un motif de blocage : ");
+            
+            // envoyer requête ajax pour bloquer le destinataire
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // blur les messages (droite et gauche)
+                    document.querySelectorAll('.right, .left, .toHide').forEach((child) => {
+                        child.classList.add('utilisateur_bloque');
+                    });
                 
-                xhr.open("GET", `/accueil/messagerie/ajax/bloquer_user.php?dest=${destinataire}&signaleur=${signaleur}&motif=${motif}`, true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.send();
+                    // préciser que l'utilisateur est bloqué
+                    document.querySelector('.error').innerHTML = "Vous avez bloqué cet utilisateur.";
+
+                    return;
+                }
             }
-        });
+            
+            xhr.open("GET", `/accueil/messagerie/ajax/bloquer_user.php?dest=${destinataire}&bloqueur=${signaleur}&motif=${motif}`, true);
+        } else { return; }
+    } else {
+        // sinon (si il est bloqué) on le débloque
+        let res = confirm("Etes vous sûr de vouloir débloquer cet utilisateur?");
+        if (res) {
+            // envoyer requête ajax pour débloquer le destinataire
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href =`/accueil/accueil.php?page=messagerie&dest=${destinataire}`;
+                }
+            }
+
+            xhr.open("GET", `/accueil/messagerie/ajax/bloquer_user.php?dest=${destinataire}&bloqueur=${signaleur}&debloquer=true`, true);
+        } else { return; }
     }
+
+    // envoyer requête ajax
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send();
+    return;
 }

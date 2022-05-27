@@ -50,11 +50,11 @@
                     fgetcsv($handle, 1000, ","); // ignore la première ligne
                     while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                         echo '<tr>';
-                        echo '<td>' . $data[0] . '</td>';
-                        echo '<td>' . $data[1] . '</td>';
-                        echo '<td>' . $data[3] . '</td>';
-                        echo '<td>' . $data[2] . '</td>';
-                        echo '<td>' . $data[4] . '</td>';
+                        echo '<td>' . $data[6] . '</td>'; // date du signalement
+                        echo '<td>' . $data[7] . '</td>'; // heure du signalement
+                        echo '<td>' . $data[5] . '</td>'; // mail du signaleur
+                        echo '<td>' . $data[2] . '</td>'; // mail du signalé
+                        echo '<td>' . $data[4] . '</td>'; // message signalé
                         echo '</tr>';
                     }
                 }

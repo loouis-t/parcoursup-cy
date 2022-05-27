@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="../root.css">
         <link rel="stylesheet" href="accueil.css">
         <script type="text/javascript" src="../index.js" defer></script>
+        <!-- Récup favicon sur site cy-tech -->
+        <link rel="icon" type="image/png" href="https://cytech.cyu.fr/jsp/images/favicon.png" />
         <title>Accueil</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->

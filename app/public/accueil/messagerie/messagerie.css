@@ -22,6 +22,11 @@ h2 .button {
     background-color: transparent;
 }
 
+/* retirer la scrollbar (c'est pas beau) */
+.messagerie__destinataires::-webkit-scrollbar {
+    display: none;
+}
+
 .messagerie__destinataires {
     display: flex;
     flex-direction: column;
@@ -33,6 +38,10 @@ h2 .button {
     overflow-y: scroll;
     
     border-right: 1px solid var(--color);
+
+    /* retirer la scrollbar (c'est pas beau) */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .messagerie__form {
@@ -212,4 +221,5 @@ span:not(:first-of-type) a.signaler {
 
 .utilisateur_bloque {
     filter: blur(10px);
+    pointer-events: none;
 }

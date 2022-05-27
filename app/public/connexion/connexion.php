@@ -50,6 +50,8 @@
         <link rel="stylesheet" href="connexion.css">
         <link rel="stylesheet" href="../root.css">
         <script type="text/javascript" src="../index.js" defer></script>
+        <!-- Récup favicon sur site cy-tech -->
+        <link rel="icon" type="image/png" href="https://cytech.cyu.fr/jsp/images/favicon.png" />
         <title>Connexion</title>
 
         <!-- fonts depuis le cdn de google (coucou @Baptiste) -->

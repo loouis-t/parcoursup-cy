@@ -78,19 +78,21 @@
                                     } else {
                                         $destinataire = $data[2];
                                     }
-                                    array_push($unique_conv, $destinataire);
-                                    echo '<input class="button" type="submit" name="dest" value="' . $destinataire . '">';
+                                    array_push($unique_conv, $destinataire);                                                // ne pas afficher deux fois le même destinataire
+                                    if ($destinataire === $_GET['dest']) { $destinataire = '• ' . $destinataire; }          // afficher conversation en cours
+                                    echo '<input class="button" type="submit" name="dest" value="' . $destinataire . '">';  // afficher le destinataire
                                 }
                             }
                             fclose($handle);
 
                             // entamer une conversation: afficher le nouveau destinataire dans la barre latérale
+                            // même si pas de message pour l'instant
                             if (
                                 isset($_GET['dest'])
                                 && $_GET['dest'] !== ''
                                 && !in_array($_GET['dest'], $unique_conv)
                             ) {
-                                echo '<input class="button" type="submit" name="dest" value="' . $_GET['dest'] . '">';
+                                echo '<input class="button" type="submit" name="dest" value="• ' . $_GET['dest'] . '">';
                             }
                         }
                     ?>
@@ -152,7 +154,9 @@
                                             . htmlspecialchars_decode($data[4]) .
                                             "<span>" . $data[1] . "</span>
                                             <span>
+                                                <attr title='Supprimer le message'>
                                                 <a onclick='message_supprimer(this)'><img src='https://img.icons8.com/ios-glyphs/16/ffffff/delete-forever.png'/></a>
+                                                </attr>
                                             <span>
                                         </p>";
                                     } else if (
@@ -164,7 +168,9 @@
                                             . $data[4] .
                                             "<span>" . $data[1] . "</span>
                                             <span>
+                                                <attr title='Signaler le message'>
                                                 <a class='signaler' onclick='message_signaler(this)'><img src='https://img.icons8.com/pastel-glyph/16/ffffff/error--v5.png'/></a>
+                                                </attr>
                                             </span>
                                         </p>";
                                     }
