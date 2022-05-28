@@ -47,6 +47,7 @@
                             break;
                         case "Responsable admission":
                             echo '<a class="button" href="/accueil/accueil.php?page=attributions">Gestion des attributions</a>';
+                            echo '<a class="button" href="/accueil/accueil.php?page=stats">Statistiques</a>';
                             break;
                         case "eleve":
                             echo '<a class="button" href="/accueil/accueil.php?page=scolarite">Ma scolarité</a>';
@@ -80,6 +81,9 @@
                                 break;
                             case "attributions":
                                 include 'attributions/attributions.php';
+                                break;
+                            case "stats":
+                                include 'stats/stats.php';
                                 break;
                             default:
                                 include 'profil/profil.php';

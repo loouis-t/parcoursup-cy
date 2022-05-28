@@ -128,6 +128,25 @@
             ?>
         </form>
 
+        <h2>Nombre d'élèves par option</h2>
+        
+        <?php
+
+            if (file_exists("../../backend/db/placesFinales")) {
+                $PARCOURS = [ "ACTU", "BI", "CS", "DS", "FT", "HPDA", "IAC", "IAP", "ICC", "INEM", "MMF", "VISUA" ];
+
+                echo '<table><tr>';
+                forEach($PARCOURS as $parcours) { echo '<th>' . $parcours . '</th>'; }
+                echo '</tr><tr>';
+                foreach($PARCOURS as $parcours) { echo '<td style="text-align:center; width: 8.333%">' . count(file('../../backend/db/placesFinales/' . $parcours . '.csv')) . '</td>'; }
+                echo '</tr><table>';
+            } else {
+                echo '<p class="error">Les places n\'ont pas encore été attribuées.</p>';
+            }
+
+        ?>
+
+
         <h2>Modifier les attributions d'options</h2>
 
         <p>
@@ -141,8 +160,6 @@
         </div>
 
         <?php
-
-            $PARCOURS = [ "ACTU", "BI", "CS", "DS", "FT", "HPDA", "IAC", "IAP", "ICC", "INEM", "MMF", "VISUA" ];
             if (file_exists('../../backend/db/placesFinales/')) {
                 // en tete tableau uniquement si les choix ont été attribués
                 echo '<table><tr>
