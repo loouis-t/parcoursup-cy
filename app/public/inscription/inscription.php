@@ -14,9 +14,9 @@
         && isset($_POST['pw'])
     ) {
         $current_eleve = [
-            str_replace(' ', '', $_POST['prenom']),
-            str_replace(' ', '', $_POST['nom']),
-            str_replace(' ', '', $_POST['mail']),
+            htmlspecialchars(str_replace(' ', '', $_POST['prenom'])),
+            htmlspecialchars(str_replace(' ', '', $_POST['nom'])),
+            htmlspecialchars(str_replace(' ', '', strtolower($_POST['mail']))),
             hash('sha256', $_POST['pw']),
             'eleve'
         ];
@@ -27,7 +27,7 @@
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 for ($i=0; $i<count($data); $i++) {
                     if (
-                        strtolower(str_replace(' ', '', $_POST['mail'])) == strtolower($data[2])
+                        $current_eleve[2] == strtolower($data[2]) // mail correspond
                     ) {
                         fclose($handle);
                         header('Location: /inscription/inscription.php?err=true');
@@ -45,7 +45,7 @@
 
             $_SESSION['prenom'] = $current_eleve[0];
             $_SESSION['nom'] = $current_eleve[1];
-            $_SESSION['mail'] = strtolower($_POST['mail']);
+            $_SESSION['mail'] = $current_eleve[2];
             $_SESSION['droits'] = 'eleve';
 
             fclose($fp);                                    // Fermeture 'identifiants.csv'
@@ -90,7 +90,7 @@
                 <h2>Inscription</h2>
 
                 <form action="inscription.php" method="post">
-                    <input class="focus" type="text" name="prenom" placeholder="Prénom" required>
+                    <input type="text" name="prenom" placeholder="Prénom" class="focus" required>
                     <input type="text" name="nom" placeholder="Nom" required>
                     <input type="text" name="mail" placeholder="e-mail" required>
                     <input type="password" name="pw" placeholder="Mot de passe" required>

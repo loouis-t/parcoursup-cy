@@ -13,21 +13,21 @@
             $_POST['mail'] == 'dvd'
             && $_POST['pw'] == 'dvd'
         ) {
-            header('Location: https://www.puvad.fr');
+            header('Location: https://www.puvad.fr/dvd.html');
             exit();
         } else {
             if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     for ($i=0; $i<count($data); $i++) {
                         if (
-                            strtolower(str_replace(' ', '', $_POST['mail'])) == strtolower($data[2])
+                            htmlspecialchars(strtolower(str_replace(' ', '', $_POST['mail']))) == strtolower($data[2])
                             && hash('sha256', $_POST['pw']) == $data[3]
                         ) {
-                            $_SESSION['prenom'] = $data[0];                                                             // stocker prenom dans session
-                            $_SESSION['nom'] = $data[1];                                                                // stocker nom dans session
-                            $_SESSION['mail'] = strtolower($_POST['mail']);                                                         // cookie mail
-                            isset($data[5]) ? $_SESSION['adresse'] = $data[5] : $_SESSION['adresse'] = 'inconnue';      // cookie adresse
-                            $_SESSION['droits'] = $data[4];                                                             // cookie droits (eleve/prof/admin)
+                            $_SESSION['prenom'] = htmlspecialchars($data[0]);                                                           // stocker prenom dans session
+                            $_SESSION['nom'] = htmlspecialchars($data[1]);                                                              // stocker nom dans session
+                            $_SESSION['mail'] = htmlspecialchars(strtolower($_POST['mail']));                                           // cookie mail
+                            isset($data[5]) ? $_SESSION['adresse'] = htmlspecialchars($data[5]) : $_SESSION['adresse'] = 'inconnue';    // cookie adresse
+                            $_SESSION['droits'] = $data[4];                                                             // cookie droits (eleve/admin/responsable admission)
 
                             fclose($handle);                                                                            // libérer csv
                             header('Location: /accueil/accueil.php');
@@ -71,7 +71,7 @@
                 <h2>Connexion</h2>
 
                 <form action="connexion.php" method="post">
-                    <input type="text" name="mail" placeholder="e-mail" required>
+                    <input type="text" name="mail" placeholder="e-mail" class="focus" required>
                     <input type="password" name="pw" placeholder="Mot de passe" required>
 
                     <?php

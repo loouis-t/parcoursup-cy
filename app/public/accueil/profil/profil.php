@@ -6,7 +6,7 @@
         && isset($_POST['adresse'])
         && (
             strtolower($_POST['mail']) !== strtolower($_SESSION['mail'])
-            || $_POST['password'] !== $_SESSION['password']
+            || $_POST['password'] !== "t'as cru mdr"
             || $_POST['adresse'] !== $_SESSION['adresse']
         )
     ) {
@@ -28,24 +28,31 @@
         if(($handle = fopen("../../backend/db/identifiants.csv", "r")) !== FALSE) {
             $fp = fopen("../../backend/db/identifiants_temp.csv", "w");
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                if (strtolower($data[2]) !== strtolower($_SESSION['mail'])) {                   // si la ligne ne correspond pas a celle qu'on cherche
-                    fputcsv($fp, $data);                                // ecrit les données dans le fichier temporaire
+                if (strtolower($data[2]) !== strtolower($_SESSION['mail'])) {       // si la ligne ne correspond pas a celle qu'on cherche
+                    fputcsv($fp, $data);                                            // ecrit les données dans le fichier temporaire
                 } else {
                     // mail
-                    $data[2] = strtolower($_POST['mail']);              // change le mail de l'élève
+                    $ancien_mail = htmlspecialchars(strtolower($data[2]));
+                    $data[2] = htmlspecialchars(strtolower($_POST['mail']));        // change le mail de l'élève
+                    
+                    if (file_exists("../assets/pdps/" . $ancien_mail . ".jpg")) {   // rename la photo de profil s'il y en a une
+                        rename("../assets/pdps/" . $ancien_mail . ".jpg", "../assets/pdps/" . $data[2] . ".jpg");
+                    }
+
                     // adresse
-                    if ($_POST['adresse'] !== 'inconnue') {
+                    $adresse = htmlspecialchars($_POST['adresse']);
+                    if ($adresse !== 'inconnue') {
                         if (isset($data[5])) {
-                            $data[5] = $_POST['adresse'];               // change adresse élève
+                            $data[5] = $adresse;                                // change adresse élève
                         } else {
-                            array_push($data, $_POST['adresse']);       // ajoute l'adresse de l'eleve
+                            array_push($data, $adresse);                        // ajoute l'adresse de l'eleve
                         }
                     }
                     // mot de passe
                     if ($_POST['password'] !== 't\'as cru mdr') {
-                        $data[3] = hash('sha256', $_POST['password']);  // change le mot de passe de l'élève
+                        $data[3] = hash('sha256', $_POST['password']);          // change le mot de passe de l'élève
                     }
-                    fputcsv($fp, $data);                                // rajouter la ligne modifiée
+                    fputcsv($fp, $data);                                        // rajouter la ligne modifiée
                 }
             }
             fclose($fp);
@@ -54,7 +61,7 @@
             rename("../../backend/db/identifiants_temp.csv", "../../backend/db/identifiants.csv");
 
             $_SESSION['mail'] = strtolower($_POST['mail']);
-            $_SESSION['adresse'] = $_POST['adresse'];
+            $_SESSION['adresse'] = htmlspecialchars($_POST['adresse']);
         }
     }
 

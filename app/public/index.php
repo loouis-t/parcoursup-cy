@@ -20,7 +20,7 @@
     </head>
     <body class="">
         <header>
-            <a href="/"><h1>parcoursup-eisti</h1></a>
+            <a href="/"><h1>parcoursup-cy</h1></a>
             <div>
                 <?php
                     // connexion/inscription || mon compte/deconnexion

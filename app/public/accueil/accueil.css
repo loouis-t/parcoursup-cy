@@ -1,3 +1,14 @@
+/* retirer la scrollbar (c'est pas beau) */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    /* retirer la scrollbar (c'est pas beau) */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* HEADER */
 header {
     display: flex;

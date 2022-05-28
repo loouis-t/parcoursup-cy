@@ -1,3 +1,4 @@
+// fonction pour toggle le theme (light/dark)
 function dark(){
    if (document.body.classList.contains('dark')) {
       document.body.classList.remove('dark');
@@ -8,7 +9,11 @@ function dark(){
    }
 }
 
+// placer le theme courant dans le stockage de session (non transmis au serveur)
 if (localStorage.getItem('theme') === 'dark') {
    document.body.classList.add('dark');
    document.querySelector('.checkbox').checked = 'true';
 }
+
+// focus sur le premier champ du formulaire (connexion/inscription)
+document.querySelector(".focus").focus();

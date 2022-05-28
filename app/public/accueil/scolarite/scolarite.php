@@ -22,7 +22,7 @@
             for($i=1; $i<=3; $i++) {
                 if(!$user_found && ($handle = fopen("../../backend/db/choixEtudiantsParcours".$i.".csv", "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                        if ($data[2] == $_SESSION['mail']) {
+                        if (htmlspecialchars(strtolower($data[2])) === $_SESSION['mail']) {
                             $user_found = true; // ne pas réiterer la boucle for
 
                             $ects = $data[3];
@@ -62,7 +62,7 @@
             foreach ($PARCOURS as $parcours) {
                 if(($handle = fopen("../../backend/db/placesFinales/".$parcours.".csv", "r")) !== FALSE) {
                     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        if ($data[2] === $_SESSION['mail']) {
+                        if (htmlspecialchars(strtolower($data[2])) === $_SESSION['mail']) {
                             echo $parcours;
                             break 2;
                         }

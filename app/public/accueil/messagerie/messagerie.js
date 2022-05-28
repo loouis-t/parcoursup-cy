@@ -59,7 +59,7 @@ function handle_exit() {
 // option de message: supprimer
 function message_supprimer(e) {
     const message = e.parentNode.parentNode.parentNode.innerHTML.split('<span>')[0];   // message
-    const heure = e.parentNode.parentNode.childNodes[1].innerHTML;          // heure
+    const heure = e.parentNode.parentNode.parentNode.childNodes[1].innerHTML;          // heure
 
     window.location.search.split('&').forEach((element) => {
         if (
@@ -72,7 +72,7 @@ function message_supprimer(e) {
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    e.parentNode.parentNode.remove();
+                    e.parentNode.parentNode.parentNode.remove();
                     return;
                 }
             }

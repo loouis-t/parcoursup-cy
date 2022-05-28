@@ -108,6 +108,8 @@ h2 .button {
 
     transition: 100ms all ease-out;
     overflow: visible;
+
+    cursor: pointer;
 }
 
 .messagerie__conversation .messagerie__conversation__messages .right {
@@ -222,4 +224,9 @@ span:not(:first-of-type) a.signaler {
 .utilisateur_bloque {
     filter: blur(10px);
     pointer-events: none;
+}
+
+/* pour voir poubelle et panneau attention en light mode */
+img {
+    filter: invert(100%);
 }

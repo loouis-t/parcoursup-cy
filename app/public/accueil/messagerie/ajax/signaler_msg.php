@@ -23,6 +23,7 @@
             fclose($handle);
         }
 
+        // signaler le message
         if(
             ($handle = fopen("../../../../backend/db/messagerie.csv", "r")) !== FALSE 
             && ($fp = fopen("../../../../backend/db/signalements.csv", "a+")) !== FALSE

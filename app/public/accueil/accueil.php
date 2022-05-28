@@ -29,7 +29,7 @@
     </head>
     <body>
         <header>
-            <a href="/"><h1>parcoursup-eisti</h1></a>
+            <a href="/"><h1>parcoursup-cy</h1></a>
             <div>
                 <a class="button" href="/accueil/accueil.php?&deco=true">Déconnexion</a>
                 <label class="switch"><input class="checkbox" type="checkbox"><span class="slider round" onclick="dark()"></span></label>

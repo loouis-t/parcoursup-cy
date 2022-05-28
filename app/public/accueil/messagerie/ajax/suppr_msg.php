@@ -15,7 +15,7 @@
                 if (
                     $data[1] !== $_GET['heure']
                     || $data[3] !== $_GET['dest']
-                    || $data[4] !== $_GET['message']
+                    || $data[4] !== htmlspecialchars($_GET['message'])
                 ) { // si la ligne ne correspond pas a celle qu'on cherche
                     fputcsv($fp, $data);                                // ecrit les données dans le fichier temporaire
                 }
