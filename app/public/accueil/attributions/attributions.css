@@ -11,6 +11,10 @@ table a {
     text-decoration: underline;
 }
 
+table:last-of-type {
+    margin-top: 1rem;
+}
+
 form #file {
     border: none;
     border-bottom: 1px solid var(--color);
@@ -25,9 +29,11 @@ label {
     font-size: smaller;
 }
 
-
 .recherche {
-    margin-bottom: 1rem;
+    display: flex;
+    column-gap: .5rem;
+
+    overflow: visible;
 }
 
 .recherche input[type="email"] {

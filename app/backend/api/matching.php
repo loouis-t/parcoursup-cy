@@ -203,7 +203,7 @@
     // log : répartition auto des élèves
     date_default_timezone_set('Europe/Paris'); // UTC+2 au lieu de UTC
     $logs = fopen("../../backend/db/logs.csv", "a+");
-    fputcsv($logs, [ date('Y-m-d'), date('H:i:s'), "'matching.php' : répartition automatique des élèves." ]);
+    fputcsv($logs, [ date('Y-m-d'), date('H:i:s'), htmlspecialchars("'matching.php' : répartition automatique des élèves.") ]);
     fclose($logs);
 
     header("Location: http://localhost:8080/accueil/accueil.php?page=attributions&state=success");

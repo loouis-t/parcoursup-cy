@@ -34,3 +34,24 @@ function modifier_option(e, nouvelle_option, ancienne_option, mail) {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send();
 }
+
+function valider() {
+    console.log("ok");
+
+    // requete ajax get
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/accueil/attributions/ajax/valider_attributions.php?validation=true", true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.responseText === "success") {
+                window.location.href = "/accueil/accueil.php?page=attributions&validation=true";
+            } else {
+                window.location.href = "/accueil/accueil.php?page=attributions&validation=false";
+            }
+        }
+    }
+
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send();
+}

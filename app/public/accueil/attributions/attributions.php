@@ -157,7 +157,22 @@
         <div class="recherche">
             <input type="email" placeholder="Adresse mail" onkeydown="entrer(this, event)">
             <input type="button" class="button" value="Chercher" onclick="chercher(this, event)">
+            <input type="button" class="button" value="Valider les admissions" onclick="valider()">
         </div>
+        <?php
+            if (isset($_GET['validation'])) {
+                switch ($_GET['validation']) {
+                    case "true":
+                        echo '<p class="success">Les attributions ont été validées.</p>';
+                        break;
+                    case "false":
+                        echo '<p class="error">Erreur : les attributions n\'ont pas pu être validées.</p>';
+                        break;
+                    default:
+                        break;
+                }
+            }
+        ?>
 
         <?php
             if (file_exists('../../backend/db/placesFinales/')) {

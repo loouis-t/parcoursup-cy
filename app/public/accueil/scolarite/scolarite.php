@@ -57,21 +57,34 @@
             }
 
             echo "<p><u>Parcours attribué :</u> ";
-            $PARCOURS = [ "ACTU", "BI", "CS", "DS", "FT", "HPDA", "IAC", "IAP", "ICC", "INEM", "MMF", "VISUA" ];
-            
-            foreach ($PARCOURS as $parcours) {
-                if(($handle = fopen("../../backend/db/placesFinales/".$parcours.".csv", "r")) !== FALSE) {
-                    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        if (htmlspecialchars(strtolower($data[2])) === $_SESSION['mail']) {
-                            echo $parcours;
-                            break 2;
-                        }
+
+            // vérifier que l'administration a bien validé l'attribution des parcours avant d'afficher le résultat
+            $valide = false;                                                // par défaut, l'admission n'a pas validé les attributions
+            if (($logs = fopen("../../backend/db/logs.csv", "r")) !== FALSE) {
+                while (($log = fgetcsv($logs, 1000, ",")) !== FALSE) {
+                    if ($log[2] === "Admission : attributions validées.") {
+                        $valide = true;                                         // si l'admission a validé les attributions, on passe à true
                     }
                 }
-                fclose($handle);
+                fclose($logs);
             }
 
-            echo "</p>";
+            if ($valide === false) {
+                echo "<span class='error'>En attente de validation par le service d'admission.</span></p>";
+            } else {
+                $PARCOURS = [ "ACTU", "BI", "CS", "DS", "FT", "HPDA", "IAC", "IAP", "ICC", "INEM", "MMF", "VISUA" ];
+                foreach ($PARCOURS as $parcours) {                                  // chercher l'éleve dans tous les parcours
+                    if(($handle = fopen("../../backend/db/placesFinales/".$parcours.".csv", "r")) !== FALSE) {
+                        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                            if (htmlspecialchars(strtolower($data[2])) === $_SESSION['mail']) {
+                                echo $parcours . "</p>";
+                                break 2;                                            // sortir des trois boucles
+                            }
+                        }
+                    }
+                    fclose($handle);
+                }
+            }
 
             if (!$user_found) {
                 echo "<p>Aucune donnée n'a été trouvée pour vous.</p>";
