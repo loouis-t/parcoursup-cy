@@ -16,4 +16,6 @@ if (localStorage.getItem('theme') === 'dark') {
 }
 
 // focus sur le premier champ du formulaire (connexion/inscription)
-document.querySelector(".focus").focus();
+if (document.querySelector('.focus') !== null) {
+   document.querySelector(".focus").focus();
+}

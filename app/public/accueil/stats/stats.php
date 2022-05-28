@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h2>Statistiques</h2>
+        <h2>Statistiques des options</h2>
 
         <?php
 
@@ -49,7 +49,7 @@
                         while (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
                             $rang = 5; // rang de départ (option 1)
                             while (isset($line[$rang])) {
-                                if ($line[$rang] === $parcours) {
+                                if (str_replace(' ', '', $line[$rang]) === $parcours) {
                                     $sum += $rang - 4;
                                     break;
                                 }
@@ -62,6 +62,20 @@
                     }
                 }
 
+                // moyenne du dernier admis
+                echo '<tr><td>Moyenne du dernier admis</td>';
+                forEach($PARCOURS as $parcours) {
+                    if (($handle = fopen("../../backend/db/placesFinales/" . $parcours . ".csv", "r")) !== FALSE) {
+                        $moyenne = 20; // moyenne de départ
+                        while (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
+                            if ($line[4] < $moyenne) {
+                                $moyenne = $line[4];
+                            }
+                        }
+                        fclose($handle);
+                        echo '<td>' . $moyenne . '</td>';
+                    }
+                }
 
                 echo '</tr></table>';
             } else {
