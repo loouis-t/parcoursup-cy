@@ -20,7 +20,7 @@ Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
 
 ### Windows
 
-Le script ```start.sh``` n'a été pensé que pour être exécuté sur un système linux ou unix. Pour une mise en production sur une machine Windows, utilisez un logiciel comme WampServer, et configurez la racine du serveveur au chemin ```/app/public/index.php```.
+Le script ```start.sh``` n'a été pensé que pour être exécuté sur un système linux ou unix. Pour une mise en production sur une machine Windows, utilisez un logiciel comme *WampServer*, et configurez la racine du serveur au chemin ```/app/public/index.php```.
 
 **Remarque :** la suite de ce ```README``` décrit les procédures pour une utilisation Linux/Unix.
 
