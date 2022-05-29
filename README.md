@@ -5,6 +5,8 @@ Une sorte de parcoursup, mais en moins bien.
 
 ## Production
 
+### Linux/Unix
+
 Démarrer un serveur en mode production (sur la branche 'main' : théoriquement stable)
 
 ```
@@ -15,7 +17,13 @@ bash start.sh --prod  (sinon)
 **Note :** ```-p est un raccourci de --prod``` fonctionne aussi.
 
 Le serveur est lancé à l'adresse [localhost:8080](http://localhost:8080)
-  
+
+### Windows
+
+Le script ```start.sh``` n'a été pensé que pour être exécuté sur un système linux ou unix. Pour une mise en production sur une machine Windows, utilisez un logiciel comme WampServer, et configurez la racine du serveveur au chemin ```/app/public/index.php```.
+
+**Remarque :** la suite de ce ```README``` décrit les procédures pour une utilisation Linux/Unix.
+
 ## Développement
 
 ```
@@ -55,14 +63,15 @@ racine/
                 |_ placesFinales/                       --> options attribuées
         |_ public/
             |_ accueil/
-                |_ attributions/                        --> attribution d'option :      admission
+                |_ attributions/                        --> attribution d'option :          admission
                     |_ ajax                             --> php appelées depuis js
-                |_ inscriptions/                        --> inscriptions en masse :     admin
-                |_ logs/                                --> logs actions importantes :  admin
+                |_ inscriptions/                        --> inscriptions en masse :         admin
+                |_ logs/                                --> logs actions importantes :      admin
                 |_ messagerie/
                     |_ ajax                             --> php appelées depuis js
                 |_ profil/
-                |_ scolarite/                           --> données de chaque éleve :   eleve
+                |_ scolarite/                           --> données de chaque éleve :       eleve
+                |_ stats/                               --> statistiques des attributions : admission
             |_ assets                                   --> images/logos/...
                 |_ pdps/                                --> photos de profil
             |_ connexion/                               --> connexion utilisateur
@@ -76,25 +85,14 @@ racine/
 
 **Utilisateurs principaux :** 
 
-- admin
-- admission
+```
+- admin                 (administrateur)
+- admission             (responsable admission)
+- denisde@cy-tech.fr    (élève test)
+```
 
 **Remarque :** Le mot de passe par défaut de ces utilisateurs est **admin**
-
-**Utilisateurs ajoutés en masse :** mot de passe généré sur 10 caractères à partir de l'alphabet (minuscule et majuscule), des chiffres de 0 à 9 et de 15 caractères spéciaux différents.
   
-
-**Blocage et signalements :**
-Les utilisateurs bloqués sont notés dans le csv 'utilisateurs_bloques.csv'.
-Les signalements dans 'signalements.csv'.
-Seul l'administrateur (admin) a accès à ces données (page *logs*).
-  
-
-**Photos de profil :**
-Les photos de profil (placées dans le répertoire 'assets/pdps/') sont nommées selon l'adresse mail de l'utilisateur.
-Ex : ```pdps/travauxlou@cy-tech.fr.jpg```
-Si l'utilisateur n'a pas upload sa photo, une photo par défaut est utilisée (le fameux *lama*).
-Cette photo par défaut est appelée : ```pdps/pdp__inconnue.jpg```
 
 ---
 
