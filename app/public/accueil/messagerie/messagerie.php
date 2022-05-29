@@ -79,7 +79,12 @@
                                         $destinataire = $data[2];
                                     }
                                     array_push($unique_conv, $destinataire);                                                // ne pas afficher deux fois le même destinataire
-                                    if ($destinataire === $_GET['dest']) { $destinataire = '• ' . $destinataire; }          // afficher conversation en cours
+                                    if (
+                                        isset($_GET['dest'])
+                                        && $destinataire === $_GET['dest']
+                                    ) { 
+                                        $destinataire = '• ' . $destinataire; // afficher conversation en cours
+                                    }
                                     echo '<input class="button" type="submit" name="dest" value="' . $destinataire . '">';  // afficher le destinataire
                                 }
                             }

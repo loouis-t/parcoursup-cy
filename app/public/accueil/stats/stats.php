@@ -32,7 +32,7 @@
                         $counter = 0;
                         $sum = 0;
                         while (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
-                            $sum += $line[4];
+                            $sum += str_replace(',', '.', $line[4]); // remplacer virgule par point
                             $counter++;
                         }
                         fclose($handle);
@@ -69,7 +69,7 @@
                         $moyenne = 20; // moyenne de départ
                         while (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
                             if ($line[4] < $moyenne) {
-                                $moyenne = $line[4];
+                                $moyenne = str_replace(',', '.', $line[4]);
                             }
                         }
                         fclose($handle);
