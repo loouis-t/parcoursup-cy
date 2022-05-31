@@ -15,7 +15,9 @@ if (localStorage.getItem('theme') === 'dark') {
    document.querySelector('.checkbox').checked = 'true';
 }
 
-// focus sur le premier champ du formulaire (connexion/inscription)
-if (document.querySelector('.focus') !== null) {
-   document.querySelector(".focus").focus();
+window.onload = () => {
+   // focus sur le premier champ du formulaire (connexion/inscription)
+   if (document.querySelector('.focus') !== null) {
+      document.querySelector(".focus").focus();
+   }
 }

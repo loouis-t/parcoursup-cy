@@ -68,7 +68,7 @@
                     if (($handle = fopen("../../backend/db/placesFinales/" . $parcours . ".csv", "r")) !== FALSE) {
                         $moyenne = 20; // moyenne de départ
                         while (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
-                            if ($line[4] < $moyenne) {
+                            if (str_replace(',', '.', $line[4]) < $moyenne) {
                                 $moyenne = str_replace(',', '.', $line[4]);
                             }
                         }
